@@ -1,13 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace InstagramClone.Api.EntityClass
+namespace InstagramClone.Api.Entit
 {
     public class PostReaction
     {
-        [ForeignKey("")]
+     
+        public Post Posts{ get; set; }
+
+        [ForeignKey("PostId")]
         public Guid PostId { get; set; }
-        [ForeignKey("")]
-        public Guid UserId { get; set; }
+
+
+        public User Users { get; set; }
+        [ForeignKey("UserId")]
+        public User UserId { get; set; }
+
+
         public int ReactionType { get; set; }
         public DateTime CreatedDate { get; set; }
     }
