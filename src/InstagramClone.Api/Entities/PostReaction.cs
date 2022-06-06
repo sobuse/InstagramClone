@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace InstagramClone.Api.Entit
+namespace InstagramClone.Api.Entities
 {
     public class PostReaction
     {

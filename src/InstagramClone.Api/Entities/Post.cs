@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace InstagramClone.Api.EntityClass
+namespace InstagramClone.Api.Entities
 {
     public class Post
     {

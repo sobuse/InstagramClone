@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace InstagramClone.Api.EntityClass
+namespace InstagramClone.Api.Entities
 {
     public class User
     {
