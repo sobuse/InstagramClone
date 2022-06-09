@@ -4,8 +4,8 @@ namespace InstagramClone.Api.Entities
 {
     public class UserFollower
     {
-        public User Users { get; set; }
-        public Guid UserId { get; set; }
+        public User User { get; set; }
+        public Guid Id { get; set; }
         public Guid FollowerId { get; set; }
         public DateTime CreatedDate { get; set; }
 
