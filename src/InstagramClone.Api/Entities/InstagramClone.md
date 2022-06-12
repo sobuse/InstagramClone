@@ -17,24 +17,23 @@ erDiagram
     }
 
     UserFollower{
-        Guid FollowerUserId
-        Guid FollowerId
-        dateTime CraetedDate
+        User FollowerUserId
+        User FollowerId
+        dateTime CreatedDate
     }
 
     Post{
         Guid Id
         string Content
         dateTime Createddate
-        User AuthorId
+        Guid AuthorId
     }
 
     PostReaction{
-        Post post
         Guid Id
         User AuthorId
         int Type
-        dateTime CreatedDate
+        DateTime CreatedDate
     }
 
 ```
