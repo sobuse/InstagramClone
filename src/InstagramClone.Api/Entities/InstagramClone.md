@@ -17,8 +17,8 @@ erDiagram
     }
 
     UserFollower{
-        FollowedUser FollowerUserId
-        Follower FollowerId
+        int FollowerUserId
+        int FollowerId
         DateTime CreatedDate
     }
 
@@ -31,7 +31,7 @@ erDiagram
 
     PostReaction{
         Guid Id
-        User AuthorId
+        int AuthorId
         int Type
         DateTime CreatedDate
     }
