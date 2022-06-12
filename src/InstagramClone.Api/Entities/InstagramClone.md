@@ -3,8 +3,8 @@ Instagram Clone Application
 ```mermaid
 erDiagram
 
-    User |{--o{Post:has
-    Post ||--|{PostReaction: has 
+    User }|--|{Post:has
+    Post }|--|{PostReaction: has 
     User}|--|{UserFollower: isFolloweredBy 
     User{
        Guid Id
@@ -17,8 +17,8 @@ erDiagram
     }
 
     UserFollower{
-        User FollowerUserId
-        User FollowerId
+        FollowedUser FollowerUserId
+        Follower FollowerId
         DateTime CreatedDate
     }
 
