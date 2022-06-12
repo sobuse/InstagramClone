@@ -4,8 +4,8 @@ Instagram Clone Application
 erDiagram
 
     User |{--o{Post:has
-    Post ||--|{PostReaction: creates 
-    User}|--|{UserFollower: has 
+    Post ||--|{PostReaction: has 
+    User}|--|{UserFollower: isFolloweredBy 
     User{
        Guid Id
        string Email
