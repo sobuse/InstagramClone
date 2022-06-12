@@ -1,6 +1,6 @@
 Instagram Clone Application
 
-```Mermaid
+```mermaid
 erDiagram
 
     User |{--o{Post:Place
