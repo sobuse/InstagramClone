@@ -3,9 +3,9 @@ Instagram Clone Application
 ```mermaid
 erDiagram
 
-    User |{--o{Post:UserId
-    Post ||--|{PostReaction: PostId
-    User}|--|{UserFollower: FollowerUserId
+    User |{--o{Post:Has
+    Post ||--|{PostReaction: creates 
+    User}|--|{UserFollower: has 
     User{
        Guid Id
        string Email
