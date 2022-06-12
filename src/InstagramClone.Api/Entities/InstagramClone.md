@@ -29,8 +29,6 @@ erDiagram
         User Author
     }
 
-
-
     PostReaction{
         Post post
         Guid Id
