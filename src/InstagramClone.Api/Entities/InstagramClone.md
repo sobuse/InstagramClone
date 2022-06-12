@@ -13,19 +13,19 @@ erDiagram
        string FirstName
        string LastName
        string Avatar
-       dateTime CreatedDate
+       DateTime CreatedDate
     }
 
     UserFollower{
         User FollowerUserId
         User FollowerId
-        dateTime CreatedDate
+        DateTime CreatedDate
     }
 
     Post{
         Guid Id
         string Content
-        dateTime Createddate
+        DateTime Createddate
         Guid AuthorId
     }
 
