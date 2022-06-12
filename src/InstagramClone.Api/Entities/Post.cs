@@ -8,8 +8,6 @@
         public DateTime CreatedDate { get; set; }
         public User Author { get; set; } //Navigation property
         public User AuthorId { get; set; }  //FK
-       
-
-
+ 
     }
 }
