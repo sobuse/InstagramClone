@@ -8,25 +8,25 @@ erDiagram
     User}|--|{UserFollower: uses
     User{
        Guid Id
-       string email
-       string password
-       string firstName
-       string lastName
+       string Email
+       string Password
+       string FirstName
+       string LastName
        string Avatar
-       dateTime createdDate
+       dateTime CreatedDate
     }
 
     UserFollower{
-        Guid followerUserId
+        Guid FollowerUserId
         Guid FollowerId
-        dateTime craetedDate
+        dateTime CraetedDate
     }
 
     Post{
         Guid Id
-        string content
-        dateTime createddate
-        User author
+        string Content
+        dateTime Createddate
+        User Author
     }
 
 
@@ -34,9 +34,9 @@ erDiagram
     PostReaction{
         Post post
         Guid Id
-        User author
-        int type
-        dateTime createdDate
+        User Author
+        int Type
+        dateTime CreatedDate
     }
 
 ```
