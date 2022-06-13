@@ -7,7 +7,7 @@
         public string Content { get; set; }
         public DateTime CreatedDate { get; set; }
         public User Author { get; set; } //Navigation property
-        public User AuthorId { get; set; }  //FK
+        public Guid AuthorId { get; set; }  //FK
  
     }
 }
