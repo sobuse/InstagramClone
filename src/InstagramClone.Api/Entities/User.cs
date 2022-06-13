@@ -10,6 +10,6 @@
         public string LastName { get; set; }
         public string Avatar { get; set; }
         public DateTime CreatedDate { get; set; }
-
+        public ICollection<Post> Posts { get; set; }
     }
 }
