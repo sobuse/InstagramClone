@@ -11,5 +11,6 @@
         public string Avatar { get; set; }
         public DateTime CreatedDate { get; set; }
         public ICollection<Post> Posts { get; set; }
+        public ICollection<UserFollower> Users { get; set; }
     }
 }
