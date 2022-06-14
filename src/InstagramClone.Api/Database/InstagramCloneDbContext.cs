@@ -20,7 +20,7 @@ namespace InstagramClone.Api.Database
 
             // composite Key
             modelBuilder.Entity<UserFollower>().HasKey(userfollower => new {userfollower.FollowedUserId, userfollower.FollowerId});
-            modelBuilder.Entity<PostReaction>().HasKey(postreaction => new {postreaction.PostId, postreaction.AuthorId} );
+           
 
             // one to many relationship
             modelBuilder.Entity<Post>().HasOne<User>(post => post.Author).WithMany( user => user.Posts);
