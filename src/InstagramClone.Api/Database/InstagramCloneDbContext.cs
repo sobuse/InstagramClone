@@ -29,22 +29,41 @@ namespace InstagramClone.Api.Database
             modelBuilder.Entity<PostReaction>().HasOne<Post>(reaction => reaction.Post)
                 .WithMany(posts => posts.PostReactions)
                 .HasForeignKey(fk => fk.PostId);
+
+
+
+            modelBuilder.Entity<UserFollower>()
+                .HasOne(following => following.Follower)
+                .WithMany(followers => followers.Users);
+
+            modelBuilder.Entity<UserFollower>()
+                .HasOne(f => f.Follower)
+                .WithMany(u => u.Followed);
+
+            modelBuilder.Entity<UserFollower>()
+                .HasOne(fl => fl.FollowedUser)
+                .WithMany( w => w.Followers);
+
+            
+
             //modelBuilder.Entity<UserFollower>()
             //    .HasOne<User>(follower => follower.FollowedUser)
             //    .WithMany(u => u.Users)
-            //    .HasForeignKey();
+            //    .HasForeignKey(f => f.FollowedUserId);
+            //modelBuilder.Entity<User>()
+            //    .HasOne<UserFollower>();
 
             // many to many relationship
 
-            modelBuilder.Entity<User_UserFollower>()
-                .HasOne(user => user.User)
-                .WithMany(Uf => Uf.User_UserFollower)
-                .HasForeignKey(u => u.Id);
+            //modelBuilder.Entity<User_UserFollower>()
+            //    .HasOne(user => user.User)
+            //    .WithMany(Uf => Uf.User_UserFollower)
+            //    .HasForeignKey(u => u.Id);
 
-            modelBuilder.Entity<User_UserFollower>()
-                .HasOne(user => user.UserFollower)
-                .WithMany(Uf => Uf.User_UserFollower)
-                .HasForeignKey(u => u.FollowerId);
+            //modelBuilder.Entity<User_UserFollower>()
+            //    .HasOne(user => user.UserFollower)
+            //    .WithMany(Uf => Uf.User_UserFollower)
+            //    .HasForeignKey(u => u.FollowerId);
 
         }
        
@@ -52,7 +71,7 @@ namespace InstagramClone.Api.Database
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostReaction> PostReactions { get; set; }
         public DbSet<UserFollower> UserFollowers { get; set; }
-        public DbSet<User_UserFollower> user_UserFollowers { get; set; }
+        
 
 
     }
