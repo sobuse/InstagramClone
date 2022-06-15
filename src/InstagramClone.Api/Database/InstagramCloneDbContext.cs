@@ -23,11 +23,28 @@ namespace InstagramClone.Api.Database
            
 
             // one to many relationship
-            modelBuilder.Entity<Post>().HasOne<User>(post => post.Author).WithMany( user => user.Posts);
-            modelBuilder.Entity<PostReaction>().HasOne<Post>(reaction => reaction.Post).WithMany(posts => posts.PostReactions);
-            modelBuilder.Entity<UserFollower>().HasOne<User>(follower => follower.FollowedUser).WithMany(u => u.Users);
+            modelBuilder.Entity<Post>().HasOne<User>(post => post.Author)
+                .WithMany( user => user.Posts)
+                .HasForeignKey(fk => fk.AuthorId);
+            modelBuilder.Entity<PostReaction>().HasOne<Post>(reaction => reaction.Post)
+                .WithMany(posts => posts.PostReactions)
+                .HasForeignKey(fk => fk.PostId);
+            //modelBuilder.Entity<UserFollower>()
+            //    .HasOne<User>(follower => follower.FollowedUser)
+            //    .WithMany(u => u.Users)
+            //    .HasForeignKey();
 
+            // many to many relationship
 
+            modelBuilder.Entity<User_UserFollower>()
+                .HasOne(user => user.User)
+                .WithMany(Uf => Uf.User_UserFollower)
+                .HasForeignKey(u => u.Id);
+
+            modelBuilder.Entity<User_UserFollower>()
+                .HasOne(user => user.UserFollower)
+                .WithMany(Uf => Uf.User_UserFollower)
+                .HasForeignKey(u => u.FollowerId);
 
         }
        
@@ -35,6 +52,7 @@ namespace InstagramClone.Api.Database
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostReaction> PostReactions { get; set; }
         public DbSet<UserFollower> UserFollowers { get; set; }
+        public DbSet<User_UserFollower> user_UserFollowers { get; set; }
 
 
     }

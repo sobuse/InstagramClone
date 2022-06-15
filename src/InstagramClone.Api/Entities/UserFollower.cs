@@ -9,6 +9,7 @@ namespace InstagramClone.Api.Entities
         public User Follower { get; set; } //Navigation property
         public Guid FollowerId { get; set; } // Fk
         public DateTime CreatedDate { get; set; }
+        public List<User_UserFollower> User_UserFollower { get; set; }
 
     }
 }

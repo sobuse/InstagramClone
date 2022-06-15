@@ -12,5 +12,6 @@
         public DateTime CreatedDate { get; set; }
         public ICollection<Post> Posts { get; set; }
         public ICollection<UserFollower> Users { get; set; }
+        public List<User_UserFollower> User_UserFollower { get; set; }
     }
 }
