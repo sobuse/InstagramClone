@@ -5,7 +5,7 @@ namespace InstagramClone.Api.Database
 {
     public class InstagramCloneDbContext : DbContext
     {
-        public InstagramCloneDbContext(): base()
+        public InstagramCloneDbContext(DbContextOptions options) : base(options)
         {
 
         }
