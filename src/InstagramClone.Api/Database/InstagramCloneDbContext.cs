@@ -26,6 +26,7 @@ namespace InstagramClone.Api.Database
             modelBuilder.Entity<Post>().HasOne<User>(post => post.Author)
                 .WithMany( user => user.Posts)
                 .HasForeignKey(fk => fk.AuthorId);
+
             modelBuilder.Entity<PostReaction>().HasOne<Post>(reaction => reaction.Post)
                 .WithMany(posts => posts.PostReactions)
                 .HasForeignKey(fk => fk.PostId);
@@ -36,13 +37,23 @@ namespace InstagramClone.Api.Database
                 .HasOne(following => following.Follower)
                 .WithMany(followers => followers.Users);
 
+
             modelBuilder.Entity<UserFollower>()
-                .HasOne(f => f.Follower)
+                .HasOne<User>(us => us.FollowedUser)
                 .WithMany(u => u.Followed);
 
             modelBuilder.Entity<UserFollower>()
-                .HasOne(fl => fl.FollowedUser)
-                .WithMany( w => w.Followers);
+                .HasOne(d => d.FollowedUser)
+                .WithMany(m => m.Followers)
+
+
+            //modelBuilder.Entity<UserFollower>()
+            //    .HasOne(f => f.Follower)
+            //    .WithMany(u => u.Followed);
+
+            //modelBuilder.Entity<UserFollower>()
+            //    .HasOne(fl => fl.FollowedUser)
+            //    .WithMany( w => w.Followers);
 
             
 
