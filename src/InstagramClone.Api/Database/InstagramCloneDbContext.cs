@@ -43,8 +43,8 @@ namespace InstagramClone.Api.Database
                 .WithMany(u => u.Followed);
 
             modelBuilder.Entity<UserFollower>()
-                .HasOne(d => d.FollowedUser)
-                .WithMany(m => m.Followers)
+                .HasOne(d => d.Follower)
+                .WithMany(m => m.Followers);
 
 
             //modelBuilder.Entity<UserFollower>()
