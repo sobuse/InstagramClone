@@ -7,7 +7,7 @@ namespace InstagramClone.Api.Database
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("DefualtConnectionString");
+            optionsBuilder.UseSqlServer("DefaultConnectionString");
         }
 
 

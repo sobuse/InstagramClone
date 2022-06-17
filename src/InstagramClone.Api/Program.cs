@@ -6,7 +6,7 @@ var app = builder.Build();
 
 builder.Services.AddDbContext<InstagramCloneDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefualtConnectionString"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
 
 app.MapGet("/", () => "Hello World!");
