@@ -5,12 +5,17 @@ namespace InstagramClone.Api.Database
 {
     public class InstagramCloneDbContext : DbContext
     {
-        public InstagramCloneDbContext(DbContextOptions options) : base(options)
-        {
+        //public InstagramCloneDbContext(DbContextOptions options) : base(options)
+        //{
+           
+        //}
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer("DefualtConnectionString");
         }
 
-       
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -33,18 +38,20 @@ namespace InstagramClone.Api.Database
 
 
 
-            modelBuilder.Entity<UserFollower>()
-                .HasOne(following => following.Follower)
-                .WithMany(followers => followers.Users);
+            //modelBuilder.Entity<UserFollower>()
+            //    .HasOne(following => following.Follower)
+            //    .WithMany(followers => followers.Users);
 
 
             modelBuilder.Entity<UserFollower>()
                 .HasOne<User>(us => us.FollowedUser)
-                .WithMany(u => u.Followed);
+                .WithMany(u => u.Followed)
+                .HasForeignKey(fk => fk.FollowedUserId);
 
             modelBuilder.Entity<UserFollower>()
                 .HasOne(d => d.Follower)
-                .WithMany(m => m.Followers);
+                .WithMany(m => m.Followers)
+                .HasForeignKey(fk => fk.FollowerId);
 
 
             //modelBuilder.Entity<UserFollower>()
