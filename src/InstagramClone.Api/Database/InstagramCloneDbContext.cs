@@ -5,11 +5,6 @@ namespace InstagramClone.Api.Database
 {
     public class InstagramCloneDbContext : DbContext
     {
-        //public InstagramCloneDbContext(DbContextOptions options) : base(options)
-        //{
-           
-        //}
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("DefualtConnectionString");
@@ -37,12 +32,6 @@ namespace InstagramClone.Api.Database
                 .HasForeignKey(fk => fk.PostId);
 
 
-
-            //modelBuilder.Entity<UserFollower>()
-            //    .HasOne(following => following.Follower)
-            //    .WithMany(followers => followers.Users);
-
-
             modelBuilder.Entity<UserFollower>()
                 .HasOne<User>(us => us.FollowedUser)
                 .WithMany(u => u.Followed)
@@ -52,36 +41,6 @@ namespace InstagramClone.Api.Database
                 .HasOne(d => d.Follower)
                 .WithMany(m => m.Followers)
                 .HasForeignKey(fk => fk.FollowerId);
-
-
-            //modelBuilder.Entity<UserFollower>()
-            //    .HasOne(f => f.Follower)
-            //    .WithMany(u => u.Followed);
-
-            //modelBuilder.Entity<UserFollower>()
-            //    .HasOne(fl => fl.FollowedUser)
-            //    .WithMany( w => w.Followers);
-
-            
-
-            //modelBuilder.Entity<UserFollower>()
-            //    .HasOne<User>(follower => follower.FollowedUser)
-            //    .WithMany(u => u.Users)
-            //    .HasForeignKey(f => f.FollowedUserId);
-            //modelBuilder.Entity<User>()
-            //    .HasOne<UserFollower>();
-
-            // many to many relationship
-
-            //modelBuilder.Entity<User_UserFollower>()
-            //    .HasOne(user => user.User)
-            //    .WithMany(Uf => Uf.User_UserFollower)
-            //    .HasForeignKey(u => u.Id);
-
-            //modelBuilder.Entity<User_UserFollower>()
-            //    .HasOne(user => user.UserFollower)
-            //    .WithMany(Uf => Uf.User_UserFollower)
-            //    .HasForeignKey(u => u.FollowerId);
 
         }
        
