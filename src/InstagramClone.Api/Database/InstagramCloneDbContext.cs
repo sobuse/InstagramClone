@@ -48,8 +48,6 @@ namespace InstagramClone.Api.Database
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostReaction> PostReactions { get; set; }
         public DbSet<UserFollower> UserFollowers { get; set; }
-        
-
-
+      
     }
 }
