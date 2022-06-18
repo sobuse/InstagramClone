@@ -1,14 +1,5 @@
-using InstagramClone.Api.Database;
-using Microsoft.EntityFrameworkCore;
+using InstagramClone.Api;
 
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
-
-builder.Services.AddDbContext<InstagramCloneDbContext>(options =>
-{
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
-});
-
-app.MapGet("/", () => "Hello World!");
+var app = Startup.InitialIzeApp(args);
 
 app.Run();
