@@ -23,24 +23,13 @@ namespace InstagramClone.Api
 
                
             });
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddControllers();
-           
-
+          
         }
 
         private static void Configure(WebApplication app)
         {
-            if(app.Environment.IsDevelopment())
-            {
-                //app.UseSwagger(); 
-            }
-
-            app.UseHttpsRedirection();
-            app.UseAuthentication();
-            
+           
             app.MapGet("/", () => "Hello World!");
-            
             
         }
     }
