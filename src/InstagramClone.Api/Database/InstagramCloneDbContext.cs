@@ -46,7 +46,10 @@ namespace InstagramClone.Api.Database
                 .HasForeignKey(fk => fk.FollowerId);
 
             modelBuilder.SeedUser();
+            modelBuilder.SeedPost();
             modelBuilder.UserFollowerSeed();
+        
+            modelBuilder.SeedPostReaction();
 
         }
 
