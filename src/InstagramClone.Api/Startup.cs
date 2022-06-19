@@ -16,13 +16,8 @@ namespace InstagramClone.Api
 
         private static void ConfigureService(WebApplicationBuilder builder)
         {
-            
-            builder.Services.AddDbContext<InstagramCloneDbContext>(options =>
-            {
-                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
-               
-            });
+            builder.Services.AddDbContext<InstagramCloneDbContext>();
           
         }
 
@@ -30,6 +25,7 @@ namespace InstagramClone.Api
         {
            
             app.MapGet("/", () => "Hello World!");
+            
             
         }
     }
