@@ -1,4 +1,5 @@
-﻿using InstagramClone.Api.Entities;
+﻿using InstagramClone.Api.Configuration;
+using InstagramClone.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Database
@@ -10,10 +11,12 @@ namespace InstagramClone.Api.Database
             optionsBuilder.UseSqlServer("DefaultConnectionString");
         }
 
-
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
+
             modelBuilder.Entity<User>().HasKey(u => u.Id);
             modelBuilder.Entity<Post>().HasKey(p => p.Id);
             modelBuilder.Entity<PostReaction>().HasKey(pr => pr.Id);
@@ -42,7 +45,12 @@ namespace InstagramClone.Api.Database
                 .WithMany(m => m.Followers)
                 .HasForeignKey(fk => fk.FollowerId);
 
+            modelBuilder.SeedUser();
+            modelBuilder.UserFollowerSeed();
+
         }
+
+        
        
         public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
