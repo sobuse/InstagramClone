@@ -21,11 +21,11 @@ namespace InstagramClone.Api.Configuration
                         Posts = new List<Post> { new Post
                         {
                        
-                                Id = Guid.NewGuid(), 
+                                Id = new Guid("CA5CB396-A1DC-4880-9D11-C08FA536A988"), 
                                 Content = "Hello world" ,
                                 AuthorId = new  Guid("50ED31B9-30AE-4E7A-BEEF-5997EABA8A21"),
                                 PostReactions = new  List<PostReaction>{ new PostReaction()
-                                    { Id = Guid.NewGuid(), 
+                                    { Id = new Guid("CA5CB396-A1DC-4880-9D11-C08FA536A988"), 
                                         CreatedDate = DateTime.Now,
                                         AuthorId =  new Guid("50ED31B9-30AE-4E7A-BEEF-5997EABA8A21"),
                                         Type = 3,
