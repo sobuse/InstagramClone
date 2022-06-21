@@ -6,9 +6,9 @@ namespace InstagramClone.Api.Database
 {
     public class InstagramCloneDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public InstagramCloneDbContext(DbContextOptions options) : base(options)
         {
-            optionsBuilder.UseSqlServer("DefaultConnectionString");
+
         }
 
         
@@ -22,28 +22,41 @@ namespace InstagramClone.Api.Database
             modelBuilder.Entity<PostReaction>().HasKey(pr => pr.Id);
 
             // composite Key
-            modelBuilder.Entity<UserFollower>().HasKey(userfollower => new {userfollower.FollowedUserId, userfollower.FollowerId});
+            modelBuilder.Entity<UserFollower>()
+                .HasKey(userfollower => 
+                new {userfollower.FollowedUserId, userfollower.FollowerId});
            
 
             // one to many relationship
             modelBuilder.Entity<Post>().HasOne<User>(post => post.Author)
                 .WithMany( user => user.Posts)
-                .HasForeignKey(fk => fk.AuthorId);
+                .HasForeignKey(fk => fk.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<PostReaction>()
+                .HasOne(p => p.Author).
+                WithMany(u => u.Reactions)
+                .HasForeignKey(fk => fk.AuthorId)
+                .OnDelete(DeleteBehavior.Restrict);
+                
 
             modelBuilder.Entity<PostReaction>().HasOne<Post>(reaction => reaction.Post)
                 .WithMany(posts => posts.PostReactions)
-                .HasForeignKey(fk => fk.PostId);
+                .HasForeignKey(fk => fk.PostId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
             modelBuilder.Entity<UserFollower>()
                 .HasOne<User>(us => us.FollowedUser)
                 .WithMany(u => u.Followed)
-                .HasForeignKey(fk => fk.FollowedUserId);
+                .HasForeignKey(fk => fk.FollowedUserId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<UserFollower>()
                 .HasOne(d => d.Follower)
                 .WithMany(m => m.Followers)
-                .HasForeignKey(fk => fk.FollowerId);
+                .HasForeignKey(fk => fk.FollowerId)
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.SeedUser();
             modelBuilder.SeedPost();
