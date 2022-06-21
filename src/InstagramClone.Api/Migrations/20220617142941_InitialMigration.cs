@@ -43,7 +43,7 @@ namespace InstagramClone.Api.Migrations
                         column: x => x.AuthorId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,18 +63,13 @@ namespace InstagramClone.Api.Migrations
                         column: x => x.FollowedUserId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_UserFollowers_Users_FollowerId",
                         column: x => x.FollowerId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserFollowers_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id");
+                        onDelete: ReferentialAction.NoAction);                  
                 });
 
             migrationBuilder.CreateTable(
@@ -95,13 +90,13 @@ namespace InstagramClone.Api.Migrations
                         column: x => x.PostId,
                         principalTable: "Posts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_PostReactions_Users_AuthorId",
                         column: x => x.AuthorId,
                         principalTable: "Users",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
