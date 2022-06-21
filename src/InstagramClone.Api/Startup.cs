@@ -13,11 +13,17 @@ namespace InstagramClone.Api
             Configure(app);
             return app;
         }
+       
 
         private static void ConfigureService(WebApplicationBuilder builder)
         {
+            
+            builder.Services.AddDbContext<InstagramCloneDbContext>(options =>
+            {
+                options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
-            builder.Services.AddDbContext<InstagramCloneDbContext>();
+               
+            });
           
         }
 
