@@ -60,7 +60,7 @@ namespace InstagramClone.Api.Database
 
             modelBuilder.SeedUser();
             modelBuilder.SeedPost();
-            modelBuilder.UserFollowerSeed();
+            modelBuilder.SeedUserFollower();
         
             modelBuilder.SeedPostReaction();
 

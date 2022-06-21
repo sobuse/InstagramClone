@@ -5,7 +5,7 @@ namespace InstagramClone.Api.Configuration
 {
     public  static class UserFollowerConfiguration
     {
-        public static void UserFollowerSeed(this ModelBuilder modelBuilder)
+        public static void SeedUserFollower(this ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserFollower>().HasData(new UserFollower
             {
