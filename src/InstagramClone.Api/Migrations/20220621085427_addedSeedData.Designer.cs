@@ -4,6 +4,7 @@ using InstagramClone.Api.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstagramClone.Api.Migrations
 {
     [DbContext(typeof(InstagramCloneDbContext))]
-    partial class InstagramCloneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220621085427_addedSeedData")]
+    partial class addedSeedData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
