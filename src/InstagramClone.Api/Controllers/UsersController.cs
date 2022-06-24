@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 namespace InstagramClone.Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")] // /users/:id
+    [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
         private readonly InstagramCloneDbContext _context;
@@ -18,18 +18,20 @@ namespace InstagramClone.Api.Controllers
         {
             _context = context;
         }
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
-
-
         //  api/users/:id
         [HttpGet("{Id}")]
         public async Task<ActionResult<User>> GetUser(Guid id)
         {
-            return await _context.Users.FindAsync(id);
+            try
+            {
+                return await _context.Users.FindAsync(id);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                "Error retrieving data from the database");
+
+            }
 
         }
 
