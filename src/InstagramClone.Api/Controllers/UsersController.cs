@@ -18,7 +18,7 @@ namespace InstagramClone.Api.Controllers
         {
             _context = context;
         }
-        //  api/users/:id
+        
         [HttpGet("{Id}")]
         public async Task<ActionResult<User>> GetUser(Guid id)
         {
