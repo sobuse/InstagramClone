@@ -19,14 +19,14 @@ namespace InstagramClone.Api
 
         private static void ConfigureService(WebApplicationBuilder builder)
         {
-            //builder.Services.AddApplicationService();
+            
             builder.Services.AddControllers(config =>
             {
                 config.RespectBrowserAcceptHeader = true;
                 config.ReturnHttpNotAcceptable = true;
             }).AddXmlDataContractSerializerFormatters();
 
-             // builder.Services.AddControllers();
+             builder.Services.AddControllers();
             builder.Services.AddCors();
 
             builder.Services.AddDbContext<InstagramCloneDbContext>(options =>
@@ -44,21 +44,13 @@ namespace InstagramClone.Api
 
             app.UseRouting();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
 
-            //app.UseRouting(route =>
-            //{
-            //    route.MapControllers();
-            //});
+           
 
             app.MapGet("/", () => "Hello World!");
             
