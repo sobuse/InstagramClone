@@ -2,37 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using InstagramClone.Api.Database;
 using InstagramClone.Api.Entities;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    //[ApiController]
+    [RoutePrefix("api/users")]
+    public class UsersController : ApiController
     {
         private readonly InstagramCloneDbContext _context;
         public UsersController(InstagramCloneDbContext context)
         {
             _context = context;
         }
-        
-        [HttpGet("{Id}")]
-        public async Task<ActionResult<User>> GetUser(Guid id)
+
+        [Route("{id:Guid}")]
+        public IHttpActionResult GetUser(Guid id)
         {
-            try
+            var user = _context.Users.Find(id);
+            if (user == null)
             {
-                return await _context.Users.FindAsync(id);
+                return NotFound();
             }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError,
-                "Error retrieving data from the database");
-
-            }
-
+            return Ok(user);
         }
 
     }
