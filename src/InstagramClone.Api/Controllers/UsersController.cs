@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Controllers
 {
-    //[ApiController]
+    
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
