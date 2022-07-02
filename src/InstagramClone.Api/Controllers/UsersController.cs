@@ -19,15 +19,18 @@ namespace InstagramClone.Api.Controllers
         {
             _context = context;
         }
-
+           [HttpGet]
         [Route("{id:Guid}")]
         public IHttpActionResult GetUser(Guid id)
         {
+            // user variable is used to store the value of a particuler user from the database
             var user = _context.Users.Find(id);
             if (user == null)
-            {
+            {   
+                // this give a 404 error responce when the user they searched for by id could not be found 
                 return NotFound();
             }
+            // returns the user that was searched for
             return Ok(user);
         }
 
