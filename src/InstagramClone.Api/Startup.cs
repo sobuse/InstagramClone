@@ -40,11 +40,13 @@ namespace InstagramClone.Api
 
         private static void Configure(WebApplication app)
         {
+            // The .UseHttpsRedirection() will issue HTTP response codes redirecting from http to https 
             app.UseHttpsRedirection();
 
+            // matches request to an endpoint
             app.UseRouting();
 
-            
+            // Executes the matched endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -53,8 +55,6 @@ namespace InstagramClone.Api
            
 
             app.MapGet("/", () => "Hello World!");
-            
-
 
         }
     }
