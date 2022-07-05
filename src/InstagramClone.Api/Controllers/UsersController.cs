@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Controllers
 {
-    
+
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
@@ -19,15 +19,16 @@ namespace InstagramClone.Api.Controllers
         {
             _context = context;
         }
-           [HttpGet]
+        [HttpGet]
         [Route("{id:Guid}")]
         public IHttpActionResult GetUser(Guid id)
         {
             // user variable is used to store the value of a particuler user from the database
+            // This finds a user by id from the db set user property from the context class
             var user = _context.Users.Find(id);
             if (user == null)
             {   
-                // this give a 404 error responce when the user they searched for by id could not be found 
+                // this give a 404 error response when the user they searched for by id could not be found 
                 return NotFound();
             }
             // returns the user that was searched for
