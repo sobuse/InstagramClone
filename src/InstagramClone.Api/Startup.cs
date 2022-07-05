@@ -27,6 +27,9 @@ namespace InstagramClone.Api
             }).AddXmlDataContractSerializerFormatters();
 
              builder.Services.AddControllers();
+
+            // CORS means Cross origin Resource sharing, It allows a server to make cross domain call from 
+            // the spcified domain while rejecting others by default due to browser security
             builder.Services.AddCors();
 
             builder.Services.AddDbContext<InstagramCloneDbContext>(options =>
