@@ -19,21 +19,19 @@ namespace InstagramClone.Api
 
         private static void ConfigureService(WebApplicationBuilder builder)
         {
-            
-            builder.Services.AddControllers(config =>
-            {
-                config.RespectBrowserAcceptHeader = true;
-                config.ReturnHttpNotAcceptable = true;
-            }).AddXmlDataContractSerializerFormatters();
-
-             builder.Services.AddControllers();
+            // registers the application controllers with the dependency injection container
+            // see https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollers?view=aspnetcore-6.0
+            builder.Services.AddControllers();
 
             // CORS means Cross origin Resource sharing, It allows a server to make cross domain call from 
             // the spcified domain while rejecting others by default due to browser security
+            // see https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-6.0
             builder.Services.AddCors();
 
+            // registers the application dbContext with the depency injection container
             builder.Services.AddDbContext<InstagramCloneDbContext>(options =>
             {
+                // configures the dbContext to use sql Server and this connection string 
                 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 
 
@@ -49,14 +47,8 @@ namespace InstagramClone.Api
             // matches request to an endpoint
             app.UseRouting();
 
-            // Executes the matched endpoint
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
-
+            app.MapControllers();
            
-
             app.MapGet("/", () => "Hello World!");
 
         }
