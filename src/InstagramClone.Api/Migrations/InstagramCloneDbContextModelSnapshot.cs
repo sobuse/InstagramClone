@@ -50,14 +50,14 @@ namespace InstagramClone.Api.Migrations
                             Id = new Guid("b09f27ac-8cae-4c87-9e7f-4a1cbb7925f2"),
                             AuthorId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
                             Content = "My instagram clone",
-                            CreatedDate = new DateTime(2022, 6, 21, 9, 54, 26, 483, DateTimeKind.Local).AddTicks(1729)
+                            CreatedDate = new DateTime(2022, 7, 2, 22, 11, 20, 886, DateTimeKind.Local).AddTicks(9079)
                         },
                         new
                         {
                             Id = new Guid("9e09fc2d-3a7d-4ac0-b58b-83d256a3fa95"),
                             AuthorId = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
                             Content = "My second post",
-                            CreatedDate = new DateTime(2022, 6, 21, 9, 54, 26, 483, DateTimeKind.Local).AddTicks(1734)
+                            CreatedDate = new DateTime(2022, 7, 2, 22, 11, 20, 886, DateTimeKind.Local).AddTicks(9083)
                         });
                 });
 
@@ -92,7 +92,7 @@ namespace InstagramClone.Api.Migrations
                         {
                             Id = new Guid("3eaefc7b-aeb4-422b-b517-95b1dacc4ce6"),
                             AuthorId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
-                            CreatedDate = new DateTime(2022, 6, 21, 9, 54, 26, 483, DateTimeKind.Local).AddTicks(1772),
+                            CreatedDate = new DateTime(2022, 7, 2, 22, 11, 20, 886, DateTimeKind.Local).AddTicks(9120),
                             PostId = new Guid("9e09fc2d-3a7d-4ac0-b58b-83d256a3fa95"),
                             Type = 2
                         });
@@ -136,7 +136,7 @@ namespace InstagramClone.Api.Migrations
                         {
                             Id = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
                             Avatar = "Sammy.jpeg",
-                            CreatedDate = new DateTime(2022, 6, 21, 9, 54, 26, 483, DateTimeKind.Local).AddTicks(1522),
+                            CreatedDate = new DateTime(2022, 7, 2, 22, 11, 20, 886, DateTimeKind.Local).AddTicks(8894),
                             Email = "ehuerikenbaba@gmail.com",
                             FirstName = "Ehueriken",
                             LastName = "Obuse",
@@ -186,7 +186,7 @@ namespace InstagramClone.Api.Migrations
                         {
                             FollowedUserId = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
                             FollowerId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
-                            CreatedDate = new DateTime(2022, 6, 21, 9, 54, 26, 483, DateTimeKind.Local).AddTicks(1752)
+                            CreatedDate = new DateTime(2022, 7, 2, 22, 11, 20, 886, DateTimeKind.Local).AddTicks(9101)
                         });
                 });
 
@@ -195,7 +195,7 @@ namespace InstagramClone.Api.Migrations
                     b.HasOne("InstagramClone.Api.Entities.User", "Author")
                         .WithMany("Posts")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -204,15 +204,15 @@ namespace InstagramClone.Api.Migrations
             modelBuilder.Entity("InstagramClone.Api.Entities.PostReaction", b =>
                 {
                     b.HasOne("InstagramClone.Api.Entities.User", "Author")
-                        .WithMany()
+                        .WithMany("Reactions")
                         .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("InstagramClone.Api.Entities.Post", "Post")
                         .WithMany("PostReactions")
                         .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Author");
@@ -251,6 +251,8 @@ namespace InstagramClone.Api.Migrations
                     b.Navigation("Followers");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("Reactions");
                 });
 #pragma warning restore 612, 618
         }
