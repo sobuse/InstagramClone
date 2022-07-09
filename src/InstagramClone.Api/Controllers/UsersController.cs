@@ -36,5 +36,27 @@ namespace InstagramClone.Api.Controllers
             return Ok(user);
         }
 
+       
+
+        [HttpPost("")]
+        public async Task<IActionResult> PostUsers([FromBody] User user)
+        {
+
+            if (user == null)
+                return BadRequest();
+            this._context.Users.Add(user);
+            this._context.SaveChanges();
+
+            return CreatedAtRoute("GetUser",
+                    new
+                    {
+                        id = user.Id,
+                        Controller = "users"
+                    },
+                    user
+                );
+
+        }
+
     }
 }
