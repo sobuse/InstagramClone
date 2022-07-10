@@ -44,7 +44,7 @@ namespace InstagramClone.Api.Controllers
 
             if (user == null)
                 return BadRequest();
-            User userDto = new User() 
+            User userToInsert = new User() 
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -54,10 +54,10 @@ namespace InstagramClone.Api.Controllers
                 Avatar = user.Avatar,
                 CreatedDate = DateTime.Now,
             };
-            this._context.Users.Add(userDto);
+            this._context.Users.Add(userToInsert);
             this._context.SaveChanges();
 
-            return Ok(userDto);
+            return Ok(userToInsert);
         } 
 
     }
