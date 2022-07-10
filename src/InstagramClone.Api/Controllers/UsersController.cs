@@ -37,34 +37,26 @@ namespace InstagramClone.Api.Controllers
         }
 
 
-        
+
         [HttpPost("")]
-        public  IActionResult PostUsers([FromBody] UserCreateDTO user)
+        public async Task<IActionResult> PostUsers([FromBody] UserCreateDTO user)
         {
 
             if (user == null)
                 return BadRequest();
             User userCreateDTO = new User()
             {
-                Id=user.Id,
-                Email=user.Email,
-                Password=user.Password,
-                FirstName=user.FirstName,
-                LastName=user.LastName,
-                Avatar=user.Avatar,
+                Id = user.Id,
+                Email = user.Email,
+                Password = user.Password,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Avatar = user.Avatar,
             };
             this._context.Users.Add(userCreateDTO);
             this._context.SaveChanges();
 
-            return CreatedAtRoute("GetUser",
-                    new
-                    {
-                        id = user.Id,
-                        Controller = "users"
-                    },
-                    userCreateDTO
-                );
-
+            return Ok(userCreateDTO);
         } 
 
     }
