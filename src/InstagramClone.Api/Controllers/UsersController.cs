@@ -39,11 +39,14 @@ namespace InstagramClone.Api.Controllers
 
 
         [HttpPost("")]
-        public async Task<IActionResult> PostUsers([FromBody] UserCreateDTO userDto)
+        public IActionResult CreateUsers([FromBody] UserCreateDTO userDto)
         {
-
+            // check if the userDto is empty
             if (userDto == null)
+                //if its empty return a bad request error 400
                 return BadRequest();
+
+            // created an object from User and called it userToInsert then passed properties from the user class to the new property using dtos
             User userToInsert = new User() 
             {
                 Id = userDto.Id,
@@ -57,7 +60,9 @@ namespace InstagramClone.Api.Controllers
             this._context.Users.Add(userToInsert);
             this._context.SaveChanges();
 
-            return Ok(userToInsert);
+            // returns a url of the user that was created 
+            // https://stackoverflow.com/questions/47939945/how-to-use-created-or-createdataction-createdatroute-in-an-asp-net-core-api#64315534
+            return CreatedAtAction(nameof(GetUser),new {id = userDto.Id },  userDto);
         } 
 
     }
