@@ -39,19 +39,19 @@ namespace InstagramClone.Api.Controllers
 
 
         [HttpPost("")]
-        public async Task<IActionResult> PostUsers([FromBody] UserCreateDTO user)
+        public async Task<IActionResult> PostUsers([FromBody] UserCreateDTO userDto)
         {
 
-            if (user == null)
+            if (userDto == null)
                 return BadRequest();
             User userToInsert = new User() 
             {
-                Id = user.Id,
-                Email = user.Email,
-                Password = user.Password,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Avatar = user.Avatar,
+                Id = userDto.Id,
+                Email = userDto.Email,
+                Password = userDto.Password,
+                FirstName = userDto.FirstName,
+                LastName = userDto.LastName,
+                Avatar = userDto.Avatar,
                 CreatedDate = DateTime.Now,
             };
             this._context.Users.Add(userToInsert);
