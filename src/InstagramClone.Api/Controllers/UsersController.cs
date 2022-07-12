@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 using InstagramClone.Api.Database;
+using InstagramClone.Api.DTOs;
 using InstagramClone.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Controllers
 {
@@ -16,6 +12,7 @@ namespace InstagramClone.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly InstagramCloneDbContext _context;
+       
         public UsersController(InstagramCloneDbContext context)
         {
             _context = context;
@@ -65,5 +62,27 @@ namespace InstagramClone.Api.Controllers
             return CreatedAtAction(nameof(GetUser),new {id = userDto.Id },  userDto);
         } 
 
+        [HttpPost("follow")]
+        public IActionResult Follow([FromBody]FollowersDto followersDto)
+        {
+
+            // "helped me alot" https://www.youtube.com/watch?v=j1e6Z-7QNpk
+
+            var followed = followersDto.FollowedUserId;
+            var following = followersDto.FollowerId;
+            
+              var followersTofollow = new UserFollower()
+              {
+                  FollowerId = followersDto.FollowerId,
+                  FollowedUserId = followersDto.FollowedUserId,
+              };
+            this._context.UserFollowers.Add(followersTofollow);
+            this._context.SaveChanges();
+
+
+            return Ok(followersTofollow);
+         
+        }
+
     }
-}
+} 
