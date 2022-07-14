@@ -69,7 +69,7 @@ namespace InstagramClone.Api.Controllers
             // "helped me alot" https://www.youtube.com/watch?v=j1e6Z-7QNpk
 
             var followed = followersDto.FollowedUserId;
-            var following = followersDto.FollowerId;
+            var following = followersDto.FollowerId; 
             
               var followersTofollow = new UserFollower()
               {
@@ -77,6 +77,18 @@ namespace InstagramClone.Api.Controllers
                   FollowedUserId = followersDto.FollowedUserId,
               };
             this._context.UserFollowers.Add(followersTofollow);
+            var ffr = _context.Users.FirstOrDefault(u => u.Id == following);
+            if (ffr.Followers != null)
+            {
+                return NotFound(following); //[Guid("57B39097-E283-46E1-87C8-CF5EFE7969CD")]
+            }
+
+            var ff = _context.Users.FirstOrDefault(u => u.Id == followed);
+            if (ff.Followed != null)
+            {
+                return NotFound(followed);
+            }
+
             this._context.SaveChanges();
 
 
