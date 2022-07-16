@@ -58,6 +58,7 @@ namespace InstagramClone.Api.Controllers
             this._context.SaveChanges();
 
             // returns a url of the user that was created 
+            // https://www.code4it.dev/blog/createdAtRoute-createdAtAction
             // https://stackoverflow.com/questions/47939945/how-to-use-created-or-createdataction-createdatroute-in-an-asp-net-core-api#64315534
             return CreatedAtAction(nameof(GetUser),new {id = userDto.Id },  userDto);
         } 
@@ -102,7 +103,7 @@ namespace InstagramClone.Api.Controllers
             this._context.SaveChanges();
 
             return CreatedAtAction(nameof(GetUser), new { id = followersTofollow }, followersTofollow);
-            //return Ok();
+           
 
         }
 
