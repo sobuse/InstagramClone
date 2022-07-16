@@ -68,32 +68,42 @@ namespace InstagramClone.Api.Controllers
 
             // "helped me alot" https://www.youtube.com/watch?v=j1e6Z-7QNpk
 
-            var followed = followersDto.FollowedUserId;
-            var following = followersDto.FollowerId; 
-            
-              var followersTofollow = new UserFollower()
+            var followed = followersDto.FollowedUserId; // 
+            var following = followersDto.FollowerId;
+
+            var uuF = _context.Users.Find(followersDto.FollowedUserId);
+            var uF = _context.Users.Find(followersDto.FollowerId);
+            var followersTofollow = new UserFollower()
               {
                   FollowerId = followersDto.FollowerId,
                   FollowedUserId = followersDto.FollowedUserId,
               };
             this._context.UserFollowers.Add(followersTofollow);
-            var ffr = _context.Users.FirstOrDefault(u => u.Id == following);
-            if (ffr.Followers != null)
+
+            
+            if (uF == null)
             {
-                return NotFound(following); //[Guid("57B39097-E283-46E1-87C8-CF5EFE7969CD")]
+                return BadRequest();
+            }
+            
+            else if (uuF == null)
+            {
+                return BadRequest();
             }
 
-            var ff = _context.Users.FirstOrDefault(u => u.Id == followed);
-            if (ff.Followed != null)
-            {
-                return NotFound(followed);
-            }
+           
+            var isAlreadyFollowed = _context.UserFollowers.Any(uf => uf.FollowedUserId == followersDto.FollowedUserId
+             && uf.FollowerId == followersDto.FollowerId);
 
+            if(isAlreadyFollowed == true)
+            {
+                return Conflict();
+            }
             this._context.SaveChanges();
 
+            return CreatedAtAction(nameof(GetUser), new { id = followersTofollow }, followersTofollow);
+            //return Ok();
 
-            return Ok(followersTofollow);
-         
         }
 
     }
