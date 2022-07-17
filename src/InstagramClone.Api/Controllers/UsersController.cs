@@ -72,23 +72,13 @@ namespace InstagramClone.Api.Controllers
             var followed = followersDto.FollowedUserId; // 
             var following = followersDto.FollowerId;
 
-
-
-            var followersTofollow = new UserFollower()
-            {
-                FollowerId = followersDto.FollowerId,
-                FollowedUserId = followersDto.FollowedUserId,
-                CreatedDate = followersDto.CreatedDate.Date
-              };
-
-
             var followerUser = _context.Users.Find(followersDto.FollowerId);
             if (followerUser == null)
             {
                 return BadRequest();
             }
-            var uuF = _context.Users.Find(followersDto.FollowedUserId);
-            if (uuF == null)
+            var followedUser = _context.Users.Find(followersDto.FollowedUserId);
+            if (followedUser == null)
             {
                 return BadRequest();
             }
@@ -101,10 +91,16 @@ namespace InstagramClone.Api.Controllers
             {
                 return Conflict();
             }
+            var followersTofollow = new UserFollower()
+            {
+                FollowerId = followersDto.FollowerId,
+                FollowedUserId = followersDto.FollowedUserId,
+                CreatedDate = followersDto.CreatedDate.Date
+            };
             this._context.UserFollowers.Add(followersTofollow);
             this._context.SaveChanges();
 
-            return Ok(followersTofollow);
+            return Ok("Created");
            
 
         }
