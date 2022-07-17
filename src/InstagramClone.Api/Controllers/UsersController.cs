@@ -66,24 +66,24 @@ namespace InstagramClone.Api.Controllers
         [HttpPost("follow")]
         public IActionResult Follow([FromBody]FollowersDto followersDto)
         {
-
             // "helped me alot" https://www.youtube.com/watch?v=j1e6Z-7QNpk
 
             var followed = followersDto.FollowedUserId; // 
             var following = followersDto.FollowerId;
 
+            // Ensured the user represented by followerId exists in the db
             var followerUser = _context.Users.Find(followersDto.FollowerId);
             if (followerUser == null)
             {
                 return BadRequest();
             }
+            // Ensured the user represented by userIdToFollow exists on the db
             var followedUser = _context.Users.Find(followersDto.FollowedUserId);
             if (followedUser == null)
             {
                 return BadRequest();
             }
-
-           
+            // check if the user userIdToFollow is already followed by the user followerId then return conflict
             var isAlreadyFollowed = _context.UserFollowers.Any(uf => uf.FollowedUserId == followersDto.FollowedUserId
              && uf.FollowerId == followersDto.FollowerId);
 
