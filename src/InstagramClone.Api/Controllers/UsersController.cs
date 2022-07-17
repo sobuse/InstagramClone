@@ -1,12 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 using InstagramClone.Api.Database;
+using InstagramClone.Api.DTOs;
 using InstagramClone.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Controllers
 {
@@ -16,6 +12,7 @@ namespace InstagramClone.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly InstagramCloneDbContext _context;
+       
         public UsersController(InstagramCloneDbContext context)
         {
             _context = context;
@@ -61,9 +58,52 @@ namespace InstagramClone.Api.Controllers
             this._context.SaveChanges();
 
             // returns a url of the user that was created 
+            // https://www.code4it.dev/blog/createdAtRoute-createdAtAction
             // https://stackoverflow.com/questions/47939945/how-to-use-created-or-createdataction-createdatroute-in-an-asp-net-core-api#64315534
             return CreatedAtAction(nameof(GetUser),new {id = userDto.Id },  userDto);
         } 
 
+        [HttpPost("follow")]
+        public IActionResult Follow([FromBody]FollowersDto followersDto)
+        {
+            // "helped me alot" https://www.youtube.com/watch?v=j1e6Z-7QNpk
+
+            var followed = followersDto.FollowedUserId; // 
+            var following = followersDto.FollowerId;
+
+            // Ensured the user represented by followerId exists in the db
+            var followerUser = _context.Users.Find(followersDto.FollowerId);
+            if (followerUser == null)
+            {
+                return BadRequest();
+            }
+            // Ensured the user represented by userIdToFollow exists on the db
+            var followedUser = _context.Users.Find(followersDto.FollowedUserId);
+            if (followedUser == null)
+            {
+                return BadRequest();
+            }
+            // check if the user userIdToFollow is already followed by the user followerId then return conflict
+            var isAlreadyFollowed = _context.UserFollowers.Any(uf => uf.FollowedUserId == followersDto.FollowedUserId
+             && uf.FollowerId == followersDto.FollowerId);
+
+            if(isAlreadyFollowed)
+            {
+                return Conflict();
+            }
+            var followersTofollow = new UserFollower()
+            {
+                FollowerId = followersDto.FollowerId,
+                FollowedUserId = followersDto.FollowedUserId,
+                CreatedDate = followersDto.CreatedDate.Date
+            };
+            this._context.UserFollowers.Add(followersTofollow);
+            this._context.SaveChanges();
+
+            return Ok("Created");
+           
+
+        }
+
     }
-}
+} 
