@@ -104,7 +104,7 @@ namespace InstagramClone.Api.Controllers
             this._context.UserFollowers.Add(followersTofollow);
             this._context.SaveChanges();
 
-            return Ok();
+            return Ok(followersTofollow);
            
 
         }
