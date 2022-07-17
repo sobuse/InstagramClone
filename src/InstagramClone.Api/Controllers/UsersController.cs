@@ -3,7 +3,7 @@ using InstagramClone.Api.Database;
 using InstagramClone.Api.DTOs;
 using InstagramClone.Api.Entities;
 using Microsoft.AspNetCore.Mvc;
-
+using System.Linq;
 namespace InstagramClone.Api.Controllers
 {
 
@@ -104,6 +104,23 @@ namespace InstagramClone.Api.Controllers
            
 
         }
+        [HttpGet("followers")]
+        public IActionResult GetUserFollowerById([FromBody] FollowersDto id)
+        {
+            var userFollowed = _context.Users.Find(id.FollowedUserId);
+            if(userFollowed == null)
+            {
+                return NotFound();
+            }
+
+            // https://stackoverflow.com/questions/7582316/linq-query-where-condition
+            // https://www.geeksforgeeks.org/linq-filtering-operator-where/
+            // Where operator filters the value according to the predicate function
+            var listOfFollowedUsers = _context.UserFollowers.Where(uf => uf.FollowedUserId == id.FollowedUserId).Select(d => d.FollowerId).ToList();
+           
+            return Ok(listOfFollowedUsers);
+        }
+
 
     }
-} 
+}
