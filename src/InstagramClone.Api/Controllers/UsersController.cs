@@ -78,6 +78,7 @@ namespace InstagramClone.Api.Controllers
               {
                   FollowerId = followersDto.FollowerId,
                   FollowedUserId = followersDto.FollowedUserId,
+                  CreatedDate = DateTime.Now()
               };
 
 
