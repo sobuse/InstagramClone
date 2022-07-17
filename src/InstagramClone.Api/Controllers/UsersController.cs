@@ -72,22 +72,22 @@ namespace InstagramClone.Api.Controllers
             var followed = followersDto.FollowedUserId; // 
             var following = followersDto.FollowerId;
 
-            var uuF = _context.Users.Find(followersDto.FollowedUserId);
-            var uF = _context.Users.Find(followersDto.FollowerId);
+            
+            
             var followersTofollow = new UserFollower()
               {
                   FollowerId = followersDto.FollowerId,
                   FollowedUserId = followersDto.FollowedUserId,
               };
-            this._context.UserFollowers.Add(followersTofollow);
 
-            
-            if (uF == null)
+
+            var followerUser = _context.Users.Find(followersDto.FollowerId);
+            if (followerUser == null)
             {
                 return BadRequest();
             }
-            
-            else if (uuF == null)
+            var uuF = _context.Users.Find(followersDto.FollowedUserId);
+            if (uuF == null)
             {
                 return BadRequest();
             }
@@ -96,13 +96,14 @@ namespace InstagramClone.Api.Controllers
             var isAlreadyFollowed = _context.UserFollowers.Any(uf => uf.FollowedUserId == followersDto.FollowedUserId
              && uf.FollowerId == followersDto.FollowerId);
 
-            if(isAlreadyFollowed == true)
+            if(isAlreadyFollowed)
             {
                 return Conflict();
             }
+            this._context.UserFollowers.Add(followersTofollow);
             this._context.SaveChanges();
 
-            return CreatedAtAction(nameof(GetUser), new { id = followersTofollow }, followersTofollow);
+            return Ok();
            
 
         }
