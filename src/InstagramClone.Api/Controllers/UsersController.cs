@@ -70,6 +70,11 @@ namespace InstagramClone.Api.Controllers
 
             var followed = followersDto.FollowedUserId; // 
             var following = followersDto.FollowerId;
+            // check to avoid a user to follower themselves 
+            if (followed == following)
+            {
+                return BadRequest();
+            }
 
             // Ensured the user represented by followerId exists in the db
             var followerUser = _context.Users.Find(followersDto.FollowerId);
@@ -104,10 +109,12 @@ namespace InstagramClone.Api.Controllers
            
 
         }
-        [HttpGet("followers")]
-        public IActionResult GetUserFollowerById([FromBody] FollowersDto id)
+        [HttpGet]
+        [Route("followers/{id}")]
+        public IActionResult GetUserFollowerById(Guid id)
         {
-            var userFollowed = _context.Users.Find(id.FollowedUserId);
+            // check db if user exist
+            var userFollowed = _context.Users.Find(id);
             if(userFollowed == null)
             {
                 return NotFound();
@@ -116,8 +123,10 @@ namespace InstagramClone.Api.Controllers
             // https://stackoverflow.com/questions/7582316/linq-query-where-condition
             // https://www.geeksforgeeks.org/linq-filtering-operator-where/
             // Where operator filters the value according to the predicate function
-            var listOfFollowedUsers = _context.UserFollowers.Where(uf => uf.FollowedUserId == id.FollowedUserId).Select(d => d.FollowerId).ToList();
-           
+            // search the db where userfollowerid is equal to the follower 
+            var listOfFollowedUsers = _context.UserFollowers.Where(uf => uf.FollowedUserId == id).Select(d => d.Follower).ToList();
+
+            // return the list of followers
             return Ok(listOfFollowedUsers);
         }
 
