@@ -130,6 +130,7 @@ namespace InstagramClone.Api.Controllers
             return Ok(listOfFollowedUsers);
         }
 
+       
 
     }
 }
