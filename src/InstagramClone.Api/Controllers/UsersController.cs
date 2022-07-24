@@ -130,18 +130,7 @@ namespace InstagramClone.Api.Controllers
             return Ok(listOfFollowedUsers);
         }
 
-        [HttpGet]
-        [Route("/api/post/{id}")]
-        public IActionResult PostedItem(Guid id)
-        {
-            var post = _context.Posts.Find(id);
-
-            if(post == null)
-            {
-                return BadRequest();
-            }
-            return Ok(post);
-        }
+       
 
     }
 }
