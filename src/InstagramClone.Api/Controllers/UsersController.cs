@@ -131,7 +131,7 @@ namespace InstagramClone.Api.Controllers
         }
 
         [HttpGet]
-        [Route("post/{id}")]
+        [Route("/api/post/{id}")]
         public IActionResult PostedItem(Guid id)
         {
             var post = _context.Posts.Find(id);
@@ -140,7 +140,7 @@ namespace InstagramClone.Api.Controllers
             {
                 return BadRequest();
             }
-            return Ok(post.Content);
+            return Ok(post);
         }
 
     }
