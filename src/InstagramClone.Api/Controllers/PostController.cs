@@ -5,7 +5,7 @@ namespace InstagramClone.Api.Controllers
 {
 
     [ApiController]
-    [Route("api/post")]
+    [Route("api/posts")]
     public class PostController : Controller
     {
         private readonly InstagramCloneDbContext context;
