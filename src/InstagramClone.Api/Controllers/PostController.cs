@@ -36,7 +36,7 @@ namespace InstagramClone.Api.Controllers
                 return BadRequest();
             }
 
-            Post InsertPost = new Post()
+            Post postToInsert = new Post()
             {
                 Id = postCreateDto.Id,
                 Content = postCreateDto.Content,
@@ -45,20 +45,24 @@ namespace InstagramClone.Api.Controllers
             };
             var postIdExist = context.Posts.Any(p=>p.Id == postCreateDto.Id);
             var authorIdExist = context.Posts.Any(a=>a.AuthorId == postCreateDto.AuthorId);
+
+            // if there is post id return conflct
             if (postIdExist)
             {
                 return Conflict();
             }
-            if (authorIdExist == null)
+
+            // author id must exit in the database
+            if (authorIdExist == false)
             {
                 return NotFound();
             }
-            this.context.Posts.Add(InsertPost);// [Guid("4794A969-7DE6-4E00-8FBE-D515BE13B596")]
+            this.context.Posts.Add(postToInsert);
             context.SaveChanges();
-
-            // if there is post id return conflct
-            // author id must exixt in the database
-            return Ok(InsertPost);
+            
+            
+           
+            return Ok(postToInsert);
         }
        
     }
