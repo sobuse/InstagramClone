@@ -1,4 +1,5 @@
 ﻿using InstagramClone.Api.Database;
+using InstagramClone.Api.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ namespace InstagramClone.Api
             Configure(app);
             return app;
         }
+
+
 
 
         private static void ConfigureService(WebApplicationBuilder builder)
@@ -37,6 +40,16 @@ namespace InstagramClone.Api
 
             });
 
+            builder.Services.AddIdentityCore<User>(o =>
+            {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = true;
+                o.Password.RequireUppercase = true;
+                o.Password.RequireNonAlphanumeric = true;
+                o.Password.RequiredLength = 10;
+                o.User.RequireUniqueEmail = true;
+            });
+
         }
 
         private static void Configure(WebApplication app)
@@ -48,6 +61,7 @@ namespace InstagramClone.Api
             app.UseRouting();
 
             app.MapControllers();
+            app.UseAuthentication();
            
             app.MapGet("/", () => "Hello World!");
 
