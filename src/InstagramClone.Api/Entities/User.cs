@@ -1,6 +1,8 @@
-﻿namespace InstagramClone.Api.Entities
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace InstagramClone.Api.Entities
 {
-    public class User
+    public class User: IdentityUser
     {
         
         public Guid Id { get; set; } //PK
