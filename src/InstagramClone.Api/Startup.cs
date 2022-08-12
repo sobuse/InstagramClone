@@ -1,7 +1,9 @@
 ﻿using InstagramClone.Api.Database;
 using InstagramClone.Api.Entities;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace InstagramClone.Api
 {
@@ -20,11 +22,14 @@ namespace InstagramClone.Api
 
 
 
+
         private static void ConfigureService(WebApplicationBuilder builder)
         {
             // registers the application controllers with the dependency injection container
             // see https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollers?view=aspnetcore-6.0
             builder.Services.AddControllers();
+            builder.Services.AddAuthentication();
+            builder.Services.ConfigureIdentity();
 
             // CORS means Cross origin Resource sharing, It allows a server to make cross domain call from 
             // the spcified domain while rejecting others by default due to browser security
@@ -40,7 +45,30 @@ namespace InstagramClone.Api
 
             });
 
-            builder.Services.AddIdentityCore<User>(o =>
+           
+
+        }
+
+        private static void Configure(WebApplication app)
+        {
+            // The .UseHttpsRedirection() will issue HTTP response codes redirecting from http to https 
+            app.UseHttpsRedirection();
+            
+
+            // matches request to an endpoint
+            app.UseRouting();
+
+            app.MapControllers();
+            app.UseAuthentication();
+            app.UseAuthorization();
+           
+            app.MapGet("/", () => "Hello World!");
+
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            var builder = services.AddIdentityCore<User>(o =>
             {
                 o.Password.RequireDigit = true;
                 o.Password.RequireLowercase = true;
@@ -49,22 +77,8 @@ namespace InstagramClone.Api
                 o.Password.RequiredLength = 10;
                 o.User.RequireUniqueEmail = true;
             });
-
-        }
-
-        private static void Configure(WebApplication app)
-        {
-            // The .UseHttpsRedirection() will issue HTTP response codes redirecting from http to https 
-            app.UseHttpsRedirection();
-
-            // matches request to an endpoint
-            app.UseRouting();
-
-            app.MapControllers();
-            app.UseAuthentication();
-           
-            app.MapGet("/", () => "Hello World!");
-
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<InstagramCloneDbContext>().AddDefaultTokenProviders();
         }
     }
 }
