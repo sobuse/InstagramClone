@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Database
 {
-    public class InstagramCloneDbContext : IdentityDbContext<User> // IdentityDbContext<ApplicationUser> //DbContext
+    public class InstagramCloneDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>//IdentityDbContext<User> // IdentityDbContext<ApplicationUser> //DbContext
     {
-        public InstagramCloneDbContext(DbContextOptions options) : base(options)
+        public InstagramCloneDbContext(DbContextOptions<InstagramCloneDbContext> options) : base(options)
         {
 
         }
