@@ -20,7 +20,8 @@ namespace InstagramClone.Api.Controllers
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetUser(Guid id)
-        {
+         
+          {
             // user variable is used to store the value of a particuler user from the database
             // This finds a user by id from the db set user property from the context class
             var user = _context.Users.Find(id);
@@ -43,8 +44,8 @@ namespace InstagramClone.Api.Controllers
                 //if its empty return a bad request error 400
                 return BadRequest();
 
-            // created an object from User and called it userToInsert then passed properties from the user class to the new property using dtos
-            User userToInsert = new User() 
+            //created an object from User and called it userToInsert then passed properties from the user class to the new property using dtos
+            User userToInsert = new User()
             {
                 Id = userDto.Id,
                 Email = userDto.Email,
@@ -54,6 +55,10 @@ namespace InstagramClone.Api.Controllers
                 Avatar = userDto.Avatar,
                 CreatedDate = DateTime.Now,
             };
+            //ApplicationUser userToInsert ApplicationUser()
+            //{
+
+            //}
             this._context.Users.Add(userToInsert);
             this._context.SaveChanges();
 
