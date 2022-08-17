@@ -55,10 +55,7 @@ namespace InstagramClone.Api.Controllers
                 Avatar = userDto.Avatar,
                 CreatedDate = DateTime.Now,
             };
-            //ApplicationUser userToInsert ApplicationUser()
-            //{
 
-            //}
             this._context.Users.Add(userToInsert);
             this._context.SaveChanges();
 
