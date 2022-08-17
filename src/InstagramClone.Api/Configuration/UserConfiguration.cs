@@ -1,4 +1,5 @@
-﻿using InstagramClone.Api.Entities;
+﻿ using InstagramClone.Api.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Configuration
@@ -8,6 +9,7 @@ namespace InstagramClone.Api.Configuration
 
         public static void SeedUser(this ModelBuilder modelBuilder)
         {
+            var hasher = new PasswordHasher<User>();
             modelBuilder.Entity<User>()
                 .HasData(
                     new User
