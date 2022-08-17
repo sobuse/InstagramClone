@@ -68,7 +68,7 @@ namespace InstagramClone.Api
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<ApplicationUser, ApplicationRole>().AddEntityFrameworkStores<InstagramCloneDbContext>();
+            services.AddIdentity<User, ApplicationRole>().AddEntityFrameworkStores<InstagramCloneDbContext>();
             var builder = services.AddIdentityCore<User>(o =>
             {
                 o.Password.RequireDigit = true;
