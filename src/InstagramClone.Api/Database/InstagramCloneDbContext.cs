@@ -63,7 +63,7 @@ namespace InstagramClone.Api.Database
             modelBuilder.SeedUser();
             modelBuilder.SeedPost();
             modelBuilder.SeedUserFollower();
-        
+            modelBuilder.SeedRole();
             modelBuilder.SeedPostReaction();
 
         }
@@ -74,6 +74,7 @@ namespace InstagramClone.Api.Database
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostReaction> PostReactions { get; set; }
         public DbSet<UserFollower> UserFollowers { get; set; }
+
       
     }
 }
