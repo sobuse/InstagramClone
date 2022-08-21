@@ -49,7 +49,7 @@ namespace InstagramClone.Api.Controllers
             {
                 Id = userDto.Id,
                 Email = userDto.Email,
-                Password = userDto.Password,
+               // Password = userDto.Password,
                 FirstName = userDto.FirstName,
                 LastName = userDto.LastName,
                 Avatar = userDto.Avatar,
@@ -107,7 +107,7 @@ namespace InstagramClone.Api.Controllers
             this._context.UserFollowers.Add(followersTofollow);
             this._context.SaveChanges();
 
-            return Ok("Created");
+            return Ok("Created"); 
            
 
         }
