@@ -29,7 +29,7 @@ namespace InstagramClone.Api
             // see https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollers?view=aspnetcore-6.0
             builder.Services.AddControllers();
             builder.Services.AddAuthentication();
-            builder.Services.ConfigureIdentity();
+           
 
             // CORS means Cross origin Resource sharing, It allows a server to make cross domain call from 
             // the spcified domain while rejecting others by default due to browser security
@@ -45,8 +45,8 @@ namespace InstagramClone.Api
 
             });
 
-           
 
+            builder.Services.ConfigureIdentity();
         }
 
         private static void Configure(WebApplication app)
