@@ -17,7 +17,7 @@ namespace InstagramClone.Api.Configuration
                               
                 }
                 
-            });
+            }); 
         }
     }
 }
