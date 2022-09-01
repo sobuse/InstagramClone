@@ -40,6 +40,9 @@ namespace InstagramClone.Api.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<Guid?>("UserManagerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
@@ -47,15 +50,24 @@ namespace InstagramClone.Api.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
+                    b.HasIndex("UserManagerId");
+
                     b.ToTable("AspNetRoles", (string)null);
 
                     b.HasData(
                         new
                         {
                             Id = new Guid("a26dfa63-7b56-49ab-9452-9efc992132f0"),
-                            ConcurrencyStamp = "ab739766-9a34-4f0b-8b63-115254b85980",
+                            ConcurrencyStamp = "65509b95-9673-438d-8396-0c8a89d44e31",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = new Guid("9ab2c24a-e944-4112-9642-6e46f6bada96"),
+                            ConcurrencyStamp = "222f4184-d544-4707-84f8-69f65e2da8a0",
+                            Name = "User",
+                            NormalizedName = "USER"
                         });
                 });
 
@@ -87,14 +99,14 @@ namespace InstagramClone.Api.Migrations
                             Id = new Guid("b09f27ac-8cae-4c87-9e7f-4a1cbb7925f2"),
                             AuthorId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
                             Content = "My instagram clone",
-                            CreatedDate = new DateTime(2022, 8, 21, 16, 46, 31, 601, DateTimeKind.Local).AddTicks(2004)
+                            CreatedDate = new DateTime(2022, 9, 1, 9, 52, 32, 965, DateTimeKind.Local).AddTicks(8060)
                         },
                         new
                         {
                             Id = new Guid("9e09fc2d-3a7d-4ac0-b58b-83d256a3fa95"),
                             AuthorId = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
                             Content = "My second post",
-                            CreatedDate = new DateTime(2022, 8, 21, 16, 46, 31, 601, DateTimeKind.Local).AddTicks(2018)
+                            CreatedDate = new DateTime(2022, 9, 1, 9, 52, 32, 965, DateTimeKind.Local).AddTicks(8071)
                         });
                 });
 
@@ -129,13 +141,39 @@ namespace InstagramClone.Api.Migrations
                         {
                             Id = new Guid("3eaefc7b-aeb4-422b-b517-95b1dacc4ce6"),
                             AuthorId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
-                            CreatedDate = new DateTime(2022, 8, 21, 16, 46, 31, 601, DateTimeKind.Local).AddTicks(2210),
+                            CreatedDate = new DateTime(2022, 9, 1, 9, 52, 32, 965, DateTimeKind.Local).AddTicks(8245),
                             PostId = new Guid("9e09fc2d-3a7d-4ac0-b58b-83d256a3fa95"),
                             Type = 2
                         });
                 });
 
-            modelBuilder.Entity("InstagramClone.Api.Entities.User", b =>
+            modelBuilder.Entity("InstagramClone.Api.Entities.UserFollower", b =>
+                {
+                    b.Property<Guid>("FollowedUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("FollowerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("FollowedUserId", "FollowerId");
+
+                    b.HasIndex("FollowerId");
+
+                    b.ToTable("UserFollowers");
+
+                    b.HasData(
+                        new
+                        {
+                            FollowedUserId = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
+                            FollowerId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
+                            CreatedDate = new DateTime(2022, 9, 1, 9, 52, 32, 965, DateTimeKind.Local).AddTicks(8111)
+                        });
+                });
+
+            modelBuilder.Entity("InstagramClone.Api.Entities.UserManager", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -221,14 +259,14 @@ namespace InstagramClone.Api.Migrations
                             Id = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
                             AccessFailedCount = 0,
                             Avatar = "Sammy.jpeg",
-                            ConcurrencyStamp = "d7ba3324-91b8-49dd-bd38-25b2c5e0571b",
-                            CreatedDate = new DateTime(2022, 8, 21, 16, 46, 31, 574, DateTimeKind.Local).AddTicks(6513),
+                            ConcurrencyStamp = "f5bea1bb-0fbf-4153-836a-453d258a7b3f",
+                            CreatedDate = new DateTime(2022, 9, 1, 9, 52, 32, 945, DateTimeKind.Local).AddTicks(9086),
                             Email = "ehuerikenbaba@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ehueriken",
                             LastName = "Obuse",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEJe2cbgUzMIrrR/+xhk94r4atkZRueueUt4I4jSKLwBINdC2Fizm3Mw3Iq5XvQbD1w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEExiUIlMs7R0AQaYlcc2Vp7uKjoE1Qb3dJDuvOdIIKuvEu7kHVp6U8Ru+WVM2d/Ywg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false
                         },
@@ -237,14 +275,14 @@ namespace InstagramClone.Api.Migrations
                             Id = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
                             AccessFailedCount = 0,
                             Avatar = "Sammy.jpeg",
-                            ConcurrencyStamp = "4985e09c-f3f3-4a4f-86e9-a64686f5b20f",
+                            ConcurrencyStamp = "ba0a2dd2-ae9f-43c8-a02c-ed3f7d9cccda",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ehueriken@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Samuel",
                             LastName = "Ehueriken",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAELEINfD6uATzrjzeAtcwip3H5w0f8qOxq4Xu1bbZtt70Wwq7UjVNF2k+pbzO/IPpAQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEFfQPGMTD9SplA7MW5dnIDPPkaTNG56xQp7nFWnCkyw7LJDeLkgCyDoOkNuX/VmCPA==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false
                         },
@@ -253,42 +291,16 @@ namespace InstagramClone.Api.Migrations
                             Id = new Guid("4ff2cd54-d7ac-4066-91d4-f646b0c5a6ea"),
                             AccessFailedCount = 0,
                             Avatar = "Sammy.jpeg",
-                            ConcurrencyStamp = "e47d0b26-3ab2-45f8-9555-998b684c3392",
+                            ConcurrencyStamp = "2ad01377-ba27-412e-81d4-ee7d3ac0d37e",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "baba@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ehimah",
                             LastName = "Obuse",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEDwDFbw/xEc5TY5XVESp8A0pywYOLSFahC3WhZtuu+eCe5oYRjfPDH+gm3SRonuoXA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEM9/3+D48LZ3nN1tvU15Hvj+rtUZO38Wtq3Hm32kOYJ6ruv5xC1vc6GMNVVPvRpAGg==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false
-                        });
-                });
-
-            modelBuilder.Entity("InstagramClone.Api.Entities.UserFollower", b =>
-                {
-                    b.Property<Guid>("FollowedUserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("FollowerId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("FollowedUserId", "FollowerId");
-
-                    b.HasIndex("FollowerId");
-
-                    b.ToTable("UserFollowers");
-
-                    b.HasData(
-                        new
-                        {
-                            FollowedUserId = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
-                            FollowerId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
-                            CreatedDate = new DateTime(2022, 8, 21, 16, 46, 31, 601, DateTimeKind.Local).AddTicks(2066)
                         });
                 });
 
@@ -395,9 +407,16 @@ namespace InstagramClone.Api.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("InstagramClone.Api.Entities.ApplicationRole", b =>
+                {
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("UserManagerId");
+                });
+
             modelBuilder.Entity("InstagramClone.Api.Entities.Post", b =>
                 {
-                    b.HasOne("InstagramClone.Api.Entities.User", "Author")
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", "Author")
                         .WithMany("Posts")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -408,7 +427,7 @@ namespace InstagramClone.Api.Migrations
 
             modelBuilder.Entity("InstagramClone.Api.Entities.PostReaction", b =>
                 {
-                    b.HasOne("InstagramClone.Api.Entities.User", "Author")
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", "Author")
                         .WithMany("Reactions")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -427,13 +446,13 @@ namespace InstagramClone.Api.Migrations
 
             modelBuilder.Entity("InstagramClone.Api.Entities.UserFollower", b =>
                 {
-                    b.HasOne("InstagramClone.Api.Entities.User", "FollowedUser")
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", "FollowedUser")
                         .WithMany("Followed")
                         .HasForeignKey("FollowedUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("InstagramClone.Api.Entities.User", "Follower")
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", "Follower")
                         .WithMany("Followers")
                         .HasForeignKey("FollowerId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -455,7 +474,7 @@ namespace InstagramClone.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
                 {
-                    b.HasOne("InstagramClone.Api.Entities.User", null)
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -464,7 +483,7 @@ namespace InstagramClone.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
                 {
-                    b.HasOne("InstagramClone.Api.Entities.User", null)
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -479,7 +498,7 @@ namespace InstagramClone.Api.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("InstagramClone.Api.Entities.User", null)
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -488,7 +507,7 @@ namespace InstagramClone.Api.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
                 {
-                    b.HasOne("InstagramClone.Api.Entities.User", null)
+                    b.HasOne("InstagramClone.Api.Entities.UserManager", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -500,7 +519,7 @@ namespace InstagramClone.Api.Migrations
                     b.Navigation("PostReactions");
                 });
 
-            modelBuilder.Entity("InstagramClone.Api.Entities.User", b =>
+            modelBuilder.Entity("InstagramClone.Api.Entities.UserManager", b =>
                 {
                     b.Navigation("Followed");
 
@@ -509,6 +528,8 @@ namespace InstagramClone.Api.Migrations
                     b.Navigation("Posts");
 
                     b.Navigation("Reactions");
+
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }
