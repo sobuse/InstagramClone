@@ -2,6 +2,7 @@
 using InstagramClone.Api.Database;
 using InstagramClone.Api.DTOs;
 using InstagramClone.Api.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 namespace InstagramClone.Api.Controllers
@@ -12,10 +13,12 @@ namespace InstagramClone.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly InstagramCloneDbContext _context;
+        private readonly UserManager<UserManager> userManager;
        
-        public UsersController(InstagramCloneDbContext context)
+        public UsersController(InstagramCloneDbContext context, UserManager<UserManager> userManager )
         {
             _context = context;
+            userManager = userManager;
         }
         [HttpGet]
         [Route("{id}")]
@@ -24,6 +27,7 @@ namespace InstagramClone.Api.Controllers
           {
             // user variable is used to store the value of a particuler user from the database
             // This finds a user by id from the db set user property from the context class
+           // var user = userManager.GetUserId(id)
             var user = _context.Users.Find(id);
             if (user == null)
             {
@@ -37,7 +41,8 @@ namespace InstagramClone.Api.Controllers
 
 
         [HttpPost("")]
-        public IActionResult CreateUsers([FromBody] UserCreateDTO userDto)
+        //[ServiceFilter(typeof(ValidationFilterAttribute))]
+        public async Task<IActionResult> CreateUsers([FromBody] UserCreateDTO userDto)
         {
             // check if the userDto is empty
             if (userDto == null)
@@ -45,19 +50,25 @@ namespace InstagramClone.Api.Controllers
                 return BadRequest();
 
             //created an object from User and called it userToInsert then passed properties from the user class to the new property using dtos
-            User userToInsert = new User()
+            UserManager userToInsert = new UserManager()
             {
                 Id = userDto.Id,
                 Email = userDto.Email,
-               // Password = userDto.Password,
-                FirstName = userDto.FirstName,
+                //Password = userDto.Password,nnjjiijjiijh b[Guid("695E1F9B-6E93-47EC-900F-BFB4BFE7775C")]
+                PasswordHash = userDto.Password,
+                FirstName = userDto.FirstName, 
                 LastName = userDto.LastName,
                 Avatar = userDto.Avatar,
-                CreatedDate = DateTime.Now,
+                Roles = userDto.Roles,
+                CreatedDate = DateTime.Now
             };
-
-            this._context.Users.Add(userToInsert);
-            this._context.SaveChanges();
+            var result = this.userManager.CreateAsync(userToInsert);
+            // this._context.Users.Add(userToInsert);
+            //this._context.SaveChanges();
+            if (!result.IsCompleted)
+            {
+                return BadRequest();
+            } 
 
             // returns a url of the user that was created 
             // https://www.code4it.dev/blog/createdAtRoute-createdAtAction
