@@ -3,6 +3,7 @@
 namespace InstagramClone.Api.Entities
 {
     public class ApplicationRole : IdentityRole<Guid>
-    {
+    { 
     }
 }
+  

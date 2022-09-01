@@ -15,6 +15,12 @@ namespace InstagramClone.Api.Configuration
                     Name = "Admin",
                     NormalizedName = "ADMIN"
                               
+                },
+                new ApplicationRole
+                {
+                    Id= new Guid("9AB2C24A-E944-4112-9642-6E46F6BADA96"),
+                    Name= "User",
+                    NormalizedName = "USER"
                 }
                 
             }); 
