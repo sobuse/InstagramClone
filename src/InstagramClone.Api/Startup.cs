@@ -68,12 +68,18 @@ namespace InstagramClone.Api
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<User, ApplicationRole>().AddEntityFrameworkStores<InstagramCloneDbContext>();
+            services.AddIdentity<UserManager, ApplicationRole>(optoins =>
+            {
+                optoins.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<InstagramCloneDbContext>();
+
+            
+            // services.AddIdentity<UserManager, ApplicationRole>().AddEntityFrameworkStores<InstagramCloneDbContext>();
             //var builder = services.AddIdentityCore<User>(o =>
             //{
             //    o.Password.RequireDigit = true;
             //    o.Password.RequireLowercase = true;
-            //    o.Password.RequireUppercase = true;
+            //    o.Password.RequireUppercase = true;  
             //    o.Password.RequireNonAlphanumeric = true;
             //    o.Password.RequiredLength = 10;
             //    o.User.RequireUniqueEmail = true;
