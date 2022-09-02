@@ -13,12 +13,14 @@ namespace InstagramClone.Api.Controllers
     public class UsersController : ControllerBase
     {
         private readonly InstagramCloneDbContext _context;
-        private readonly UserManager<UserManager> userManager;
-       
-        public UsersController(InstagramCloneDbContext context, UserManager<UserManager> userManager )
+        private readonly UserManager<User> userManager;
+        private readonly PasswordHasher<User> hasher;
+
+        public UsersController(InstagramCloneDbContext context, UserManager<User> userManager )
         {
             _context = context;
-            userManager = userManager;
+            this.userManager = userManager;
+            this.hasher = new PasswordHasher<User>();
         }
         [HttpGet]
         [Route("{id}")]
@@ -44,36 +46,45 @@ namespace InstagramClone.Api.Controllers
         //[ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> CreateUsers([FromBody] UserCreateDTO userDto)
         {
-            // check if the userDto is empty
-            if (userDto == null)
-                //if its empty return a bad request error 400
-                return BadRequest();
 
-            //created an object from User and called it userToInsert then passed properties from the user class to the new property using dtos
-            UserManager userToInsert = new UserManager()
+            try
             {
-                Id = userDto.Id,
-                Email = userDto.Email,
-                //Password = userDto.Password,nnjjiijjiijh b[Guid("695E1F9B-6E93-47EC-900F-BFB4BFE7775C")]
-                PasswordHash = userDto.Password,
-                FirstName = userDto.FirstName, 
-                LastName = userDto.LastName,
-                Avatar = userDto.Avatar,
-                Roles = userDto.Roles,
-                CreatedDate = DateTime.Now
-            };
-            var result = this.userManager.CreateAsync(userToInsert);
-            // this._context.Users.Add(userToInsert);
-            //this._context.SaveChanges();
-            if (!result.IsCompleted)
-            {
-                return BadRequest();
-            } 
+                // check if the userDto is empty
+                if (userDto == null)
+                    //if its empty return a bad request error 400
+                    return BadRequest();
 
-            // returns a url of the user that was created 
-            // https://www.code4it.dev/blog/createdAtRoute-createdAtAction
-            // https://stackoverflow.com/questions/47939945/how-to-use-created-or-createdataction-createdatroute-in-an-asp-net-core-api#64315534
-            return CreatedAtAction(nameof(GetUser),new {id = userDto.Id },  userDto);
+                //created an object from User and called it userToInsert then passed properties from the user class to the new property using dtos
+                User userToInsert = new User()
+                {
+                    Id = userDto.Id,
+                    Email = userDto.Email,
+                    // used the password hasher to hash the plain password 
+                    PasswordHash = hasher.HashPassword(null, userDto.Password),
+                    FirstName = userDto.FirstName,
+                    LastName = userDto.LastName,
+                    Avatar = userDto.Avatar, 
+                    UserName = userDto.Email,
+                    CreatedDate = DateTime.Now
+
+                };
+
+               var result = await this.userManager.CreateAsync(userToInsert);
+               
+
+                var rolesResult = await this.userManager.AddToRolesAsync(userToInsert, userDto.Roles);
+
+                // returns a url of the user that was created 
+                // https://www.code4it.dev/blog/createdAtRoute-createdAtAction
+                // https://stackoverflow.com/questions/47939945/how-to-use-created-or-createdataction-createdatroute-in-an-asp-net-core-api#64315534
+                return CreatedAtAction(nameof(GetUser), new { id = userDto.Id } , userDto);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
         } 
 
         [HttpPost("follow")]
