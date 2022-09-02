@@ -27,7 +27,7 @@ namespace InstagramClone.Api
         {
             // registers the application controllers with the dependency injection container
             // see https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollers?view=aspnetcore-6.0
-            builder.Services.AddControllers();
+            
             builder.Services.AddAuthentication();
            
 
@@ -47,6 +47,7 @@ namespace InstagramClone.Api
 
 
             builder.Services.ConfigureIdentity();
+            builder.Services.AddControllers();
         }
 
         private static void Configure(WebApplication app)
@@ -68,9 +69,10 @@ namespace InstagramClone.Api
 
         public static void ConfigureIdentity(this IServiceCollection services)
         {
-            services.AddIdentity<UserManager, ApplicationRole>(optoins =>
+            services.AddIdentity<User, ApplicationRole>(optoins =>
             {
                 optoins.User.RequireUniqueEmail = true;
+                
             }).AddEntityFrameworkStores<InstagramCloneDbContext>();
 
             
