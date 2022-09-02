@@ -2,11 +2,9 @@
 
 namespace InstagramClone.Api.Entities
 {
-    public class UserManager: IdentityUser<Guid>
+    public class User: IdentityUser<Guid>
     {
-        public Guid Id { get; set; } //PK
-       // public string Email { get; set; }
-        //public string Password { get; set; }
+       // public Guid Id { get; set; } //PK
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Avatar { get; set; }
@@ -15,7 +13,7 @@ namespace InstagramClone.Api.Entities
         public ICollection<UserFollower> Followers { get; set; } // Navigation
         public ICollection<UserFollower> Followed { get; set; } // Navigation
         public ICollection<PostReaction> Reactions { get; set; } // Navigation
-        public ICollection<ApplicationRole> Roles { get; set; }
+       // public ICollection<ApplicationRole> Roles { get; set; }
 
     }
 }

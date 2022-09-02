@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Database
 {
-    public class InstagramCloneDbContext : IdentityDbContext<UserManager, ApplicationRole, Guid>//IdentityDbContext<User> // IdentityDbContext<ApplicationUser> //DbContext
+    public class InstagramCloneDbContext : IdentityDbContext<User, ApplicationRole, Guid>//IdentityDbContext<User> // IdentityDbContext<ApplicationUser> //DbContext
     {
         public InstagramCloneDbContext(DbContextOptions<InstagramCloneDbContext> options) : base(options)
         {
@@ -30,7 +30,7 @@ namespace InstagramClone.Api.Database
            
 
             // one to many relationship
-            modelBuilder.Entity<Post>().HasOne<UserManager>(post => post.Author)
+            modelBuilder.Entity<Post>().HasOne<User>(post => post.Author)
                 .WithMany( user => user.Posts)
                 .HasForeignKey(fk => fk.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -49,7 +49,7 @@ namespace InstagramClone.Api.Database
 
 
             modelBuilder.Entity<UserFollower>()
-                .HasOne<UserManager>(us => us.FollowedUser)
+                .HasOne<User>(us => us.FollowedUser)
                 .WithMany(u => u.Followed)
                 .HasForeignKey(fk => fk.FollowedUserId)
                 .OnDelete(DeleteBehavior.Restrict);
