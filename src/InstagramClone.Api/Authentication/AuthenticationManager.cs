@@ -24,7 +24,7 @@ namespace InstagramClone.Api.Authentication
 
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
         {
-            user = await userManager.FindByEmailAsync(userForAuth.Email);
+           await userManager.FindByEmailAsync(userForAuth.Email);
 
             return (user != null && await userManager.CheckPasswordAsync(user, userForAuth.Password));
 
