@@ -1,9 +1,13 @@
-﻿using InstagramClone.Api.Database;
+﻿using InstagramClone.Api.Configuration;
+using InstagramClone.Api.Database;
 using InstagramClone.Api.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace InstagramClone.Api
 {
@@ -48,6 +52,7 @@ namespace InstagramClone.Api
 
             builder.Services.ConfigureIdentity();
             builder.Services.AddControllers();
+            builder.Services.JwtConfiguration(builder.Configuration);
         }
 
         private static void Configure(WebApplication app)
@@ -67,7 +72,33 @@ namespace InstagramClone.Api
 
         }
 
-        public static void ConfigureIdentity(this IServiceCollection services)
+        //public static void JwtConfiguration(this IServiceCollection services, IConfiguration configuration)
+        //{
+        //    var jwtSettings = configuration.GetSection("jwtSettings");
+        //    var secretKey = Environment.GetEnvironmentVariable("SECRET");
+
+        //    services.AddAuthentication(opt =>
+        //    {
+        //        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        //    }).AddJwtBearer(opt =>
+        //    {
+        //        opt.TokenValidationParameters = new TokenValidationParameters
+        //        {
+        //            ValidateIssuer = true,
+        //            ValidateAudience = true,
+        //            ValidateLifetime = true,
+        //            ValidateIssuerSigningKey = true,
+
+        //            ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
+        //            ValidAudience = jwtSettings.GetSection("validAudience").Value,
+        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+        //        };
+        //    });
+            
+        //}
+    
+
+    public static void ConfigureIdentity(this IServiceCollection services)
         {
             services.AddIdentity<User, ApplicationRole>(optoins =>
             {
@@ -75,7 +106,7 @@ namespace InstagramClone.Api
                 
             }).AddEntityFrameworkStores<InstagramCloneDbContext>();
 
-            
+           
             // services.AddIdentity<UserManager, ApplicationRole>().AddEntityFrameworkStores<InstagramCloneDbContext>();
             //var builder = services.AddIdentityCore<User>(o =>
             //{
