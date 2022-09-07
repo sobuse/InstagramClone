@@ -1,12 +1,15 @@
 ﻿using InstagramClone.Api.Authentication;
 using InstagramClone.Api.DTOs;
 using InstagramClone.Api.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Http;
+//using System.Web.Http;
 
 namespace InstagramClone.Api.Controllers
 {
+    [ApiController]
+    [Route("api/auth")]
     public class AuthenticationController : Controller
     {
         public IActionResult Index()
@@ -22,8 +25,8 @@ namespace InstagramClone.Api.Controllers
             this.userManager = userManager;
             this.authenticationManager = authenticationManager;
         }
-
-       // [HttpPost("login")]
+        
+        [HttpPost("login")]
         [Authorize]
         public async Task<IActionResult> Authenticate([System.Web.Http.FromBody] UserForAuthenticationDto user)
         {
