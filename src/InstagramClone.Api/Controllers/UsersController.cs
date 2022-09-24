@@ -2,6 +2,7 @@
 using InstagramClone.Api.Database;
 using InstagramClone.Api.DTOs;
 using InstagramClone.Api.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace InstagramClone.Api.Controllers
 {
 
     [ApiController]
+    [Authorize]
     [Route("api/users")]
     public class UsersController : ControllerBase
     {
@@ -16,7 +18,7 @@ namespace InstagramClone.Api.Controllers
         private readonly UserManager<User> userManager;
         private readonly PasswordHasher<User> hasher;
 
-        public UsersController(InstagramCloneDbContext context, UserManager<User> userManager )
+        public UsersController(InstagramCloneDbContext context, UserManager<User> userManager)
         {
             _context = context;
             this.userManager = userManager;
@@ -25,11 +27,10 @@ namespace InstagramClone.Api.Controllers
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetUser(Guid id)
-         
-          {
+        {
             // user variable is used to store the value of a particuler user from the database
             // This finds a user by id from the db set user property from the context class
-           // var user = userManager.GetUserId(id)
+            // var user = userManager.GetUserId(id)
             var user = _context.Users.Find(id);
             if (user == null)
             {
@@ -43,8 +44,9 @@ namespace InstagramClone.Api.Controllers
 
 
         [HttpPost("")]
+        [AllowAnonymous]
         //[ServiceFilter(typeof(ValidationFilterAttribute))]
-        public async Task<IActionResult> CreateUsers([FromBody] UserCreateDTO userDto)
+        public async Task<IActionResult> RegisterUser([FromBody] UserCreateDTO userDto)
         {
 
             try
@@ -63,32 +65,32 @@ namespace InstagramClone.Api.Controllers
                     PasswordHash = hasher.HashPassword(null, userDto.Password),
                     FirstName = userDto.FirstName,
                     LastName = userDto.LastName,
-                    Avatar = userDto.Avatar, 
+                    Avatar = userDto.Avatar,
                     UserName = userDto.Email,
                     CreatedDate = DateTime.Now
 
                 };
 
-               var result = await this.userManager.CreateAsync(userToInsert);
-               
+                var result = await this.userManager.CreateAsync(userToInsert);
+
 
                 var rolesResult = await this.userManager.AddToRolesAsync(userToInsert, userDto.Roles);
 
                 // returns a url of the user that was created 
                 // https://www.code4it.dev/blog/createdAtRoute-createdAtAction
                 // https://stackoverflow.com/questions/47939945/how-to-use-created-or-createdataction-createdatroute-in-an-asp-net-core-api#64315534
-                return CreatedAtAction(nameof(GetUser), new { id = userDto.Id } , userDto);
+                return CreatedAtAction(nameof(GetUser), new { id = userDto.Id }, userDto);
             }
             catch (Exception ex)
             {
 
                 throw;
             }
-           
-        } 
+
+        }
 
         [HttpPost("follow")]
-        public IActionResult Follow([FromBody]FollowersDto followersDto)
+        public IActionResult Follow([FromBody] FollowersDto followersDto)
         {
             // "helped me alot" https://www.youtube.com/watch?v=j1e6Z-7QNpk
 
@@ -116,7 +118,7 @@ namespace InstagramClone.Api.Controllers
             var isAlreadyFollowed = _context.UserFollowers.Any(uf => uf.FollowedUserId == followersDto.FollowedUserId
              && uf.FollowerId == followersDto.FollowerId);
 
-            if(isAlreadyFollowed)
+            if (isAlreadyFollowed)
             {
                 return Conflict();
             }
@@ -129,8 +131,8 @@ namespace InstagramClone.Api.Controllers
             this._context.UserFollowers.Add(followersTofollow);
             this._context.SaveChanges();
 
-            return Ok("Created"); 
-           
+            return Ok("Created");
+
 
         }
         [HttpGet]
@@ -139,7 +141,7 @@ namespace InstagramClone.Api.Controllers
         {
             // check db if user exist
             var userFollowed = _context.Users.Find(id);
-            if(userFollowed == null)
+            if (userFollowed == null)
             {
                 return NotFound();
             }
@@ -154,7 +156,7 @@ namespace InstagramClone.Api.Controllers
             return Ok(listOfFollowedUsers);
         }
 
-       
+
 
     }
 }
