@@ -1,4 +1,5 @@
-﻿using InstagramClone.Api.Configuration;
+﻿using InstagramClone.Api.Authentication;
+using InstagramClone.Api.Configuration;
 using InstagramClone.Api.Database;
 using InstagramClone.Api.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -49,7 +50,7 @@ namespace InstagramClone.Api
 
             });
 
-
+            builder.Services.AddScoped<AuthenticationManager>();
             builder.Services.ConfigureIdentity();
             builder.Services.AddControllers();
             builder.Services.JwtConfiguration(builder.Configuration);
