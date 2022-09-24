@@ -14,7 +14,8 @@ namespace InstagramClone.Api.Authentication
         private readonly UserManager<User> userManager;
         private readonly IConfiguration configuration;
 
-        private readonly User user;
+
+        private  User user;
 
         public AuthenticationManager(UserManager<User> userManager, IConfiguration configuration)
         {
@@ -24,7 +25,8 @@ namespace InstagramClone.Api.Authentication
 
         public async Task<bool> ValidateUser(UserForAuthenticationDto userForAuth)
         {
-           await userManager.FindByEmailAsync(userForAuth.Email);
+
+            this.user  = await userManager.FindByEmailAsync(userForAuth.Email);
 
             return (user != null && await userManager.CheckPasswordAsync(user, userForAuth.Password));
 
@@ -67,7 +69,7 @@ namespace InstagramClone.Api.Authentication
 
         private JwtSecurityToken GenerateTokenOptions(SigningCredentials signingCreadentails, List<Claim> claims)
         {
-            var jwtSettings = configuration.GetSection("JwtSetting");
+            var jwtSettings = configuration.GetSection("JwtSettings");
 
             var tokenOptions = new JwtSecurityToken
                 (
