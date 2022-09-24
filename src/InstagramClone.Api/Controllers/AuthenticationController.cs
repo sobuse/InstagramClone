@@ -12,10 +12,7 @@ namespace InstagramClone.Api.Controllers
     [Route("api/auth")]
     public class AuthenticationController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
 
         private readonly UserManager<User> userManager;
         private readonly AuthenticationManager authenticationManager;
@@ -27,7 +24,7 @@ namespace InstagramClone.Api.Controllers
         }
         
         [HttpPost("login")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Authenticate([System.Web.Http.FromBody] UserForAuthenticationDto user)
         {
             if (!await authenticationManager.ValidateUser(user))
