@@ -12,26 +12,26 @@ namespace InstagramClone.Api.Database
 
         }
 
-        
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
 
-           // modelBuilder.Entity<User>().HasKey(u => u.Id);
+
+            // modelBuilder.Entity<User>().HasKey(u => u.Id);
             modelBuilder.Entity<Post>().HasKey(p => p.Id);
             modelBuilder.Entity<PostReaction>().HasKey(pr => pr.Id);
 
             // composite Key
             modelBuilder.Entity<UserFollower>()
-                .HasKey(userfollower => 
-                new {userfollower.FollowedUserId, userfollower.FollowerId});
-           
+                .HasKey(userfollower =>
+                new { userfollower.FollowedUserId, userfollower.FollowerId });
+
 
             // one to many relationship
             modelBuilder.Entity<Post>().HasOne<User>(post => post.Author)
-                .WithMany( user => user.Posts)
+                .WithMany(user => user.Posts)
                 .HasForeignKey(fk => fk.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
 
@@ -40,7 +40,7 @@ namespace InstagramClone.Api.Database
                 WithMany(u => u.Reactions)
                 .HasForeignKey(fk => fk.AuthorId)
                 .OnDelete(DeleteBehavior.Restrict);
-                
+
 
             modelBuilder.Entity<PostReaction>().HasOne<Post>(reaction => reaction.Post)
                 .WithMany(posts => posts.PostReactions)
@@ -68,13 +68,10 @@ namespace InstagramClone.Api.Database
 
         }
 
-        
-       
-       //public DbSet<User> Users { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostReaction> PostReactions { get; set; }
         public DbSet<UserFollower> UserFollowers { get; set; }
 
-      
+
     }
 }
