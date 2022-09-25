@@ -5,21 +5,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace InstagramClone.Api.Database
 {
-    public class InstagramCloneDbContext : IdentityDbContext<User, ApplicationRole, Guid>//IdentityDbContext<User> // IdentityDbContext<ApplicationUser> //DbContext
+    public class InstagramCloneDbContext : IdentityDbContext<User, ApplicationRole, Guid>
     {
         public InstagramCloneDbContext(DbContextOptions<InstagramCloneDbContext> options) : base(options)
         {
 
         }
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
 
-            // modelBuilder.Entity<User>().HasKey(u => u.Id);
             modelBuilder.Entity<Post>().HasKey(p => p.Id);
             modelBuilder.Entity<PostReaction>().HasKey(pr => pr.Id);
 
