@@ -24,17 +24,13 @@ namespace InstagramClone.Api
             return app;
         }
 
-
-
-
-
         private static void ConfigureService(WebApplicationBuilder builder)
         {
             // registers the application controllers with the dependency injection container
             // see https://docs.microsoft.com/en-us/dotnet/api/microsoft.extensions.dependencyinjection.mvcservicecollectionextensions.addcontrollers?view=aspnetcore-6.0
-            
+
             builder.Services.AddAuthentication();
-           
+
 
             // CORS means Cross origin Resource sharing, It allows a server to make cross domain call from 
             // the spcified domain while rejecting others by default due to browser security
@@ -60,7 +56,7 @@ namespace InstagramClone.Api
         {
             // The .UseHttpsRedirection() will issue HTTP response codes redirecting from http to https 
             app.UseHttpsRedirection();
-            
+
 
             // matches request to an endpoint
             app.UseRouting();
@@ -68,58 +64,19 @@ namespace InstagramClone.Api
             app.MapControllers();
             app.UseAuthentication();
             app.UseAuthorization();
-           
+
             app.MapGet("/", () => "Hello World!");
 
         }
 
-        //public static void JwtConfiguration(this IServiceCollection services, IConfiguration configuration)
-        //{
-        //    var jwtSettings = configuration.GetSection("jwtSettings");
-        //    var secretKey = Environment.GetEnvironmentVariable("SECRET");
-
-        //    services.AddAuthentication(opt =>
-        //    {
-        //        opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-        //    }).AddJwtBearer(opt =>
-        //    {
-        //        opt.TokenValidationParameters = new TokenValidationParameters
-        //        {
-        //            ValidateIssuer = true,
-        //            ValidateAudience = true,
-        //            ValidateLifetime = true,
-        //            ValidateIssuerSigningKey = true,
-
-        //            ValidIssuer = jwtSettings.GetSection("validIssuer").Value,
-        //            ValidAudience = jwtSettings.GetSection("validAudience").Value,
-        //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
-        //        };
-        //    });
-            
-        //}
-    
-
-    public static void ConfigureIdentity(this IServiceCollection services)
+        public static void ConfigureIdentity(this IServiceCollection services)
         {
             services.AddIdentity<User, ApplicationRole>(optoins =>
             {
                 optoins.User.RequireUniqueEmail = true;
-                
+
             }).AddEntityFrameworkStores<InstagramCloneDbContext>();
 
-           
-            // services.AddIdentity<UserManager, ApplicationRole>().AddEntityFrameworkStores<InstagramCloneDbContext>();
-            //var builder = services.AddIdentityCore<User>(o =>
-            //{
-            //    o.Password.RequireDigit = true;
-            //    o.Password.RequireLowercase = true;
-            //    o.Password.RequireUppercase = true;  
-            //    o.Password.RequireNonAlphanumeric = true;
-            //    o.Password.RequiredLength = 10;
-            //    o.User.RequireUniqueEmail = true;
-            //});
-            //builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
-            //builder.AddEntityFrameworkStores<InstagramCloneDbContext>().AddDefaultTokenProviders();
         }
     }
 }
