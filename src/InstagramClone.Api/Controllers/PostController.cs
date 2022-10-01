@@ -49,7 +49,6 @@ namespace InstagramClone.Api.Controllers
                 Id = postCreateDto.Id,
                 Content = postCreateDto.Content,
                 AuthorId = loggedInUser.Id,
-               // AuthorId = postCreateDto.AuthorId,
                 CreatedDate = postCreateDto.CreatedDate,
             };
             var postIdExist = context.Posts.Any(p=>p.Id == postCreateDto.Id);
