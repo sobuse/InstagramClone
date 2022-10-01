@@ -31,7 +31,9 @@ namespace InstagramClone.Api.Controllers
             // user variable is used to store the value of a particuler user from the database
             // This finds a user by id from the db set user property from the context class
             // var user = userManager.GetUserId(id)
-            var user = _context.Users.Find(id);
+            var loggedInUserEmail = Request.HttpContext.User.Identity.Name;
+            var loggedInUser = userManager.FindByEmailAsync(loggedInUserEmail);
+            var user = _context.Users.Find(loggedInUser.Id);
             if (user == null)
             {
                 // this give a 404 error response when the user they searched for by id could not be found 
@@ -45,7 +47,6 @@ namespace InstagramClone.Api.Controllers
 
         [HttpPost("")]
         [AllowAnonymous]
-        //[ServiceFilter(typeof(ValidationFilterAttribute))]
         public async Task<IActionResult> RegisterUser([FromBody] UserCreateDTO userDto)
         {
 
@@ -90,24 +91,22 @@ namespace InstagramClone.Api.Controllers
         }
 
         [HttpPost("follow")]
-        public IActionResult Follow([FromBody] FollowersDto followersDto)
+        public async Task<IActionResult> Follow([FromBody] FollowersDto followersDto)
         {
+
             // "helped me alot" https://www.youtube.com/watch?v=j1e6Z-7QNpk
 
+            var loggedInUserEmail = Request.HttpContext.User.Identity.Name;
+            var loggedInUser = await userManager.FindByEmailAsync(loggedInUserEmail);
+
             var followed = followersDto.FollowedUserId; // 
-            var following = followersDto.FollowerId;
+            var following = loggedInUser.Id;
             // check to avoid a user to follower themselves 
             if (followed == following)
             {
                 return BadRequest();
             }
 
-            // Ensured the user represented by followerId exists in the db
-            var followerUser = _context.Users.Find(followersDto.FollowerId);
-            if (followerUser == null)
-            {
-                return BadRequest();
-            }
             // Ensured the user represented by userIdToFollow exists on the db
             var followedUser = _context.Users.Find(followersDto.FollowedUserId);
             if (followedUser == null)
@@ -116,7 +115,7 @@ namespace InstagramClone.Api.Controllers
             }
             // check if the user userIdToFollow is already followed by the user followerId then return conflict
             var isAlreadyFollowed = _context.UserFollowers.Any(uf => uf.FollowedUserId == followersDto.FollowedUserId
-             && uf.FollowerId == followersDto.FollowerId);
+             && uf.FollowerId == loggedInUser.Id);
 
             if (isAlreadyFollowed)
             {
@@ -124,7 +123,7 @@ namespace InstagramClone.Api.Controllers
             }
             var followersTofollow = new UserFollower()
             {
-                FollowerId = followersDto.FollowerId,
+                FollowerId = loggedInUser.Id,
                 FollowedUserId = followersDto.FollowedUserId,
                 CreatedDate = followersDto.CreatedDate.Date
             };
@@ -133,8 +132,8 @@ namespace InstagramClone.Api.Controllers
 
             return Ok("Created");
 
-
         }
+
         [HttpGet]
         [Route("followers/{id}")]
         public IActionResult GetUserFollowerById(Guid id)
