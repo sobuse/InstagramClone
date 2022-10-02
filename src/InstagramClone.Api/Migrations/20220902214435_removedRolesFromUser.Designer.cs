@@ -4,6 +4,7 @@ using InstagramClone.Api.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InstagramClone.Api.Migrations
 {
     [DbContext(typeof(InstagramCloneDbContext))]
-    partial class InstagramCloneDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220902214435_removedRolesFromUser")]
+    partial class removedRolesFromUser
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -53,14 +55,14 @@ namespace InstagramClone.Api.Migrations
                         new
                         {
                             Id = new Guid("a26dfa63-7b56-49ab-9452-9efc992132f0"),
-                            ConcurrencyStamp = "d55b2111-e996-47c5-b789-7b3b4d245392",
+                            ConcurrencyStamp = "c73a4b83-8464-4c4e-9d72-098631a18506",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = new Guid("9ab2c24a-e944-4112-9642-6e46f6bada96"),
-                            ConcurrencyStamp = "55d7396d-ff96-4063-8195-62b8cc8c2f5f",
+                            ConcurrencyStamp = "45493ad3-86a6-4561-9fc8-c9c06d24e841",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -94,14 +96,14 @@ namespace InstagramClone.Api.Migrations
                             Id = new Guid("b09f27ac-8cae-4c87-9e7f-4a1cbb7925f2"),
                             AuthorId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
                             Content = "My instagram clone",
-                            CreatedDate = new DateTime(2022, 10, 2, 10, 2, 43, 616, DateTimeKind.Local).AddTicks(9046)
+                            CreatedDate = new DateTime(2022, 9, 2, 22, 44, 34, 212, DateTimeKind.Local).AddTicks(890)
                         },
                         new
                         {
                             Id = new Guid("9e09fc2d-3a7d-4ac0-b58b-83d256a3fa95"),
                             AuthorId = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
                             Content = "My second post",
-                            CreatedDate = new DateTime(2022, 10, 2, 10, 2, 43, 616, DateTimeKind.Local).AddTicks(9057)
+                            CreatedDate = new DateTime(2022, 9, 2, 22, 44, 34, 212, DateTimeKind.Local).AddTicks(907)
                         });
                 });
 
@@ -136,7 +138,7 @@ namespace InstagramClone.Api.Migrations
                         {
                             Id = new Guid("3eaefc7b-aeb4-422b-b517-95b1dacc4ce6"),
                             AuthorId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
-                            CreatedDate = new DateTime(2022, 10, 2, 10, 2, 43, 616, DateTimeKind.Local).AddTicks(9189),
+                            CreatedDate = new DateTime(2022, 9, 2, 22, 44, 34, 212, DateTimeKind.Local).AddTicks(1162),
                             PostId = new Guid("9e09fc2d-3a7d-4ac0-b58b-83d256a3fa95"),
                             Type = 2
                         });
@@ -227,15 +229,15 @@ namespace InstagramClone.Api.Migrations
                         {
                             Id = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
                             AccessFailedCount = 0,
-                            Avatar = "https://api.lorem.space/image/face?w=150&h=150",
-                            ConcurrencyStamp = "6d6c5419-dadb-4cae-913b-3aa42d57a98a",
-                            CreatedDate = new DateTime(2022, 10, 2, 10, 2, 43, 592, DateTimeKind.Local).AddTicks(5742),
+                            Avatar = "Sammy.jpeg",
+                            ConcurrencyStamp = "6a857c6c-27b8-464d-aaaf-da6896c5bc46",
+                            CreatedDate = new DateTime(2022, 9, 2, 22, 44, 34, 189, DateTimeKind.Local).AddTicks(2398),
                             Email = "ehuerikenbaba@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ehueriken",
                             LastName = "Obuse",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEA4Hg35gcc6aFtprlVIOEgDROYGfGjqPE2v4WsE/LaT5RabrqTgxVwzPR9gzIC4PRg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOHvoGekGkL4k4Qef8/+BZRv9q1c0cOmxvSVmaFOiJscqUqjBqvYK7QeAXwWexRU2A==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false
                         },
@@ -243,15 +245,15 @@ namespace InstagramClone.Api.Migrations
                         {
                             Id = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
                             AccessFailedCount = 0,
-                            Avatar = "https://api.lorem.space/image/face?w=150&h=150",
-                            ConcurrencyStamp = "f081cfdc-cf5d-4239-9517-ae5d7c7c50c3",
+                            Avatar = "Sammy.jpeg",
+                            ConcurrencyStamp = "f7e04e34-4323-4f3f-bf90-1de950773e24",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ehueriken@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Samuel",
                             LastName = "Ehueriken",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEMo53thWSUZDvOYo8dkyqTFq3vbP45tjLXvmUXfB+nJmm4O62vWWdNxUEV39D/CIKg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEOmrBVym7asy8Ct6YIvXgfml8USTBbqIb8SFaTFKX7wxFUlg34eNm4McvB15kIteeQ==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false
                         },
@@ -259,15 +261,15 @@ namespace InstagramClone.Api.Migrations
                         {
                             Id = new Guid("4ff2cd54-d7ac-4066-91d4-f646b0c5a6ea"),
                             AccessFailedCount = 0,
-                            Avatar = "https://api.lorem.space/image/face?w=150&h=150",
-                            ConcurrencyStamp = "aed89fa2-2e0a-4367-be54-9894a1b61dbd",
+                            Avatar = "Sammy.jpeg",
+                            ConcurrencyStamp = "2a85db29-3d65-47d0-9d1e-afaf21b59cb6",
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "baba@gmail.com",
                             EmailConfirmed = false,
                             FirstName = "Ehimah",
                             LastName = "Obuse",
                             LockoutEnabled = false,
-                            PasswordHash = "AQAAAAEAACcQAAAAEB0Bdl707NQ3ChKotlflBvElOxUtkq3/sqP8HWmvc3iyN3XhXtNYoHniP8HZhxnoJw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEL+O8TfkOyq33Krpn3zvH76KkFxbVDOSA7U8gYS1d1SAEmJq+0BDTXqErbImhieu+g==",
                             PhoneNumberConfirmed = false,
                             TwoFactorEnabled = false
                         });
@@ -295,7 +297,7 @@ namespace InstagramClone.Api.Migrations
                         {
                             FollowedUserId = new Guid("88e18c3a-8ec4-4008-b36e-f1925525472e"),
                             FollowerId = new Guid("50ed31b9-30ae-4e7a-beef-5997eaba8a21"),
-                            CreatedDate = new DateTime(2022, 10, 2, 10, 2, 43, 616, DateTimeKind.Local).AddTicks(9087)
+                            CreatedDate = new DateTime(2022, 9, 2, 22, 44, 34, 212, DateTimeKind.Local).AddTicks(977)
                         });
                 });
 
