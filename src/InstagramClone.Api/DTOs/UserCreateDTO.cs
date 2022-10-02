@@ -6,6 +6,7 @@ namespace InstagramClone.Api
     public class UserCreateDTO
     {
         public Guid Id { get; set; } //PK
+        [Required(ErrorMessage ="Email is required")]
         public string Email { get; set; }
         [Required (ErrorMessage ="Password is required.")]
         public string Password { get; set; } 
