@@ -21,7 +21,7 @@ namespace InstagramClone.Api.Configuration
                         PasswordHash = hasher.HashPassword(null, "12345"),
                         FirstName = "Ehueriken",
                         LastName = "Obuse",
-                        Avatar = "Sammy.jpeg",                    
+                        Avatar = "https://api.lorem.space/image/face?w=150&h=150",                    
                         CreatedDate = DateTime.Now
                        
 
@@ -33,7 +33,7 @@ namespace InstagramClone.Api.Configuration
                         PasswordHash = hasher.HashPassword(null, "12345"),
                         FirstName = "Samuel",
                         LastName = "Ehueriken",
-                        Avatar = "Sammy.jpeg"
+                        Avatar = "https://api.lorem.space/image/face?w=150&h=150"
 
                     },
                     new User
@@ -43,7 +43,7 @@ namespace InstagramClone.Api.Configuration
                         PasswordHash = hasher.HashPassword(null, "12345"),
                         FirstName = "Ehimah",
                         LastName = "Obuse",
-                        Avatar = "Sammy.jpeg"
+                        Avatar = "https://api.lorem.space/image/face?w=150&h=150"
 
                     }
                 ) ;
