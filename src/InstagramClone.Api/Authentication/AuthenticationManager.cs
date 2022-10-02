@@ -76,7 +76,7 @@ namespace InstagramClone.Api.Authentication
                     issuer: jwtSettings.GetSection("validIssuer").Value,
                     audience: jwtSettings.GetSection("validAudience").Value,
                     claims: claims,
-                    expires: DateTime.Now.AddMinutes(Convert.ToDouble(jwtSettings.GetSection("expires").Value)),
+                    expires: DateTime.Now.AddHours(Convert.ToDouble(jwtSettings.GetSection("expires").Value)),
                     signingCredentials: signingCreadentails
                 );
 
