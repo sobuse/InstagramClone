@@ -12,6 +12,6 @@ namespace InstagramClone.Api.Entities
         public ICollection<UserFollower> Followers { get; set; } // Navigation
         public ICollection<UserFollower> Followed { get; set; } // Navigation
         public ICollection<PostReaction> Reactions { get; set; } // Navigation
-                                                                 // 
+                                                                 
     }
 }
