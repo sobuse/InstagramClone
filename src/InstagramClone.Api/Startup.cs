@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace InstagramClone.Api
@@ -46,14 +47,23 @@ namespace InstagramClone.Api
 
             });
 
+            builder.Services.AddCors();
             builder.Services.AddScoped<AuthenticationManager>();
             builder.Services.ConfigureIdentity();
             builder.Services.AddControllers();
             builder.Services.JwtConfiguration(builder.Configuration);
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "InstagrameClone", Version = "v1" });
+            });
+
         }
 
         private static void Configure(WebApplication app)
         {
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "InstagramClone v1"));
             // The .UseHttpsRedirection() will issue HTTP response codes redirecting from http to https 
             app.UseHttpsRedirection();
 
@@ -61,11 +71,14 @@ namespace InstagramClone.Api
             // matches request to an endpoint
             app.UseRouting();
 
+            app.UseCors(p => p.WithOrigins("http://localhost:3000/").AllowAnyHeader().AllowAnyMethod());
+
             app.MapControllers();
             app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapGet("/", () => "Hello World!");
+            //app.MapGet("/", (InstagramCloneDbContext instagram) => instagram.Users);
 
         }
 
