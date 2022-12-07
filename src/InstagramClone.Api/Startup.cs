@@ -46,10 +46,12 @@ namespace InstagramClone.Api
 
             });
 
+            builder.Services.AddCors();
             builder.Services.AddScoped<AuthenticationManager>();
             builder.Services.ConfigureIdentity();
             builder.Services.AddControllers();
             builder.Services.JwtConfiguration(builder.Configuration);
+           
         }
 
         private static void Configure(WebApplication app)
@@ -61,11 +63,13 @@ namespace InstagramClone.Api
             // matches request to an endpoint
             app.UseRouting();
 
+            app.UseCors(p => p.WithOrigins("http://localhost:3000/").AllowAnyHeader().AllowAnyMethod());
+
             app.MapControllers();
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.MapGet("/", () => "Hello World!");
+            app.MapGet("/", (InstagramCloneDbContext instagram) => instagram.Users);
 
         }
 
